@@ -18,9 +18,9 @@ export class AuthComponent implements OnInit {
   
   constructor(private router: Router, private authService: AuthService) { 
     this.form = new FormGroup({
-      'nickname': new FormControl(this.nickname, Validators.compose([Validators.required, Validators.minLength(2)])),
-      'email' : new FormControl('',  Validators.compose([Validators.required, Validators.email])),
-      'pass' : new FormControl('', [Validators.required, Validators.minLength(6)])
+      'nickname': new FormControl('nickname', Validators.compose([Validators.required, Validators.minLength(2)])),
+      'email' : new FormControl('mail12@gmail.com',  Validators.compose([Validators.required, Validators.email])),
+      'pass' : new FormControl('pass2', [Validators.required, Validators.minLength(2)])
     });
   }
 
@@ -28,12 +28,11 @@ export class AuthComponent implements OnInit {
   }
 
   login(){
-    alert('valid='+this.form.valid);
     const login = this.form.get('email')?.value;
     const pass = this.form.get('pass')?.value;
 
     if (this.form.get('email')?.valid && this.form.get('pass')?.valid)
-      this.authService.login(login, pass);
+      this.authService.login(login, pass).subscribe();
   }
 
   registration(){
@@ -42,7 +41,7 @@ export class AuthComponent implements OnInit {
     const nickname = this.form.get('nickname')?.value;
 
     if (this.form.valid)
-      this.authService.register(login, pass, nickname);
+      this.authService.register(login, pass, nickname).subscribe();
   }
 
   toMain(){
@@ -57,10 +56,6 @@ export class AuthComponent implements OnInit {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('nickname');
-  }
-
-  get nickname():string | null{
-    return localStorage.getItem('nickname');
   }
 
   public get isLogin(): boolean {

@@ -12,7 +12,7 @@ export const ACCESS_TOKEN_KEY = 'auction_access_token';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseApiUrl = `${this.apiUrl}api/`;
+  private baseApiUrl = `${this.apiUrl}api/auth`;
 
   constructor(
     private httpClient: HttpClient, 
@@ -23,7 +23,7 @@ export class AuthService {
 
   login(email: string, pass: string) : Observable<Token> {
     const body = {email: email, password: pass};
-    return this.httpClient.post<Token>(this.baseApiUrl, body)
+    return this.httpClient.post<Token>(`${this.baseApiUrl}/login`, body)
       .pipe(tap(token => {
         localStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
         this.router.navigate(['']);
@@ -32,8 +32,10 @@ export class AuthService {
 
   register(email: string, pass: string, nickname: string) : Observable<Token> {
     const body = {email: email, password: pass, nickname: nickname};
-
-    return this.httpClient.post<Token>(this.baseApiUrl, body)
+    
+    const url = `${this.baseApiUrl}/registration`;
+    alert(url);
+    return this.httpClient.post<Token>(url, body)
       .pipe(tap(token => {
         localStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
         this.router.navigate(['']);
