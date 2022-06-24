@@ -1,0 +1,5 @@
+<div class="category-list">
+  <div *ngIf="lotCategories" class="category-list">
+    <app-category-lot *ngFor="let category of lotCategories" [lotCategory]="category" (onSelectedCategory)="handleSelectedCategory($event)"></app-category-lot>
+  </div>
+</div>

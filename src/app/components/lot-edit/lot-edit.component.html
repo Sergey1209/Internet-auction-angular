@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="items">
+    <form class="form">
+      <div class="flex">
+        <div>
+          <label>Name:</label>
+          <input type="text" name="name" [(ngModel)]="this.lot.name" required="REQUIRED" minlength="2" placeholder="">        
+        </div>
+        <div>
+          <label>Description:</label>
+          <textarea name="description" cols="30" rows="20" [(ngModel)]="this.lot.description" placeholder=""></textarea>
+        </div>
+        <div>
+          <label>Deadline:</label>
+          <input type="datetime-local" name="deadline" [(ngModel)]="this.lot.deadline">
+        </div>
+        <div>
+          <label>Initia price:</label>
+          <input type="number" name="initialPrice" [(ngModel)]="this.lot.initialPrice">
+        </div>         
+      </div>
+      <app-select-image [url]="imgUrl1" accept=".jpg,.jpeg" (onChangedUrl)="this.file1 = $event"></app-select-image>
+      <app-select-image [url]="imgUrl2" accept=".jpg,.jpeg" (onChangedUrl)="this.file2 = $event"></app-select-image>
+      <app-select-image [url]="imgUrl3" accept=".jpg,.jpeg" (onChangedUrl)="this.file3 = $event"></app-select-image>
+      <div class="flex">
+        <div class="submit">
+          <button type="submit" (click)="save()">OK</button> 
+        </div> 
+      </div>
+    </form>    
+  </div>
+</div>

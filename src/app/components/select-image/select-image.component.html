@@ -1,0 +1,9 @@
+<form class="container">
+  <div class="img" *ngIf="this.urlValue">
+    <button class="remove" id="btn-reset-input" (click)="reset()">X</button>
+    <input type="image" src={{this.urlValue}} alt=''>
+  </div>   
+  <div class="input-img">
+    <input type="file" id="myInputFileId" (change)="this.onFileSelected($event)" accept="{{this.accept}}">
+  </div>
+</form>

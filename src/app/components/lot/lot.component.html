@@ -1,0 +1,21 @@
+<ng-container *ngIf="lot">
+  <div class="container">
+    
+    <div class="image"> 
+      <img src={{lot.images[currentImgIndex]}} alt={{lot.name}} class="center">
+    </div>
+    <div class="text-block">
+      <div  class="description">
+        {{lot.description}}
+      </div>   
+      <p>deadline: {{lot.deadline}}</p>
+      <div>
+        <button class="margin-right">{{lot.initialPrice}} $</button>      
+        <a href="">Make a bet</a>
+      </div>
+      <div>
+        <button (click)="onClickEdit()">Edit</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

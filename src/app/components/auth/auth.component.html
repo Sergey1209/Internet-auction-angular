@@ -1,0 +1,30 @@
+<form [formGroup]="form" novalidate>
+  <div class="container">
+    <div class="form">
+      <h2>Welcome to Internet auction</h2>
+      <div *ngIf="regVisible">
+        <p class="err-mesg" *ngIf="form.controls['nickname'].invalid && form.controls['nickname'].touched">Nickname is not valid!</p>
+        <label>Nickname:</label>
+        <input class="form-control" type="text" formControlName="nickname">
+      </div>
+      <div>
+        <p class="err-mesg" *ngIf="form.controls['email'].invalid && form.controls['email'].touched">Email is not valid!</p>
+        <label>Email:</label>
+        <input class="form-control" type="email" formControlName="email">
+      </div>
+      <div>
+        <p class="err-mesg" *ngIf="form.controls['pass'].invalid && form.controls['pass'].touched" class="err-mesg">Password is not valid!</p>
+        <label>Password:</label>
+        <input class="form-control" type="password" formControlName="pass">  
+      </div>
+      <p class="margin-no">
+        <a *ngIf="!loginVisible" class="regText" (click)="toggleButton()">Login</a>
+        <a *ngIf="!regVisible" class="regText" (click)="toggleButton()">Registration</a>
+        <a href="/home">Home</a>
+      </p>
+      <input *ngIf="regVisible" class="submit" type="submit" value="Registration" (click)="registration()">
+      <input *ngIf="loginVisible" class="submit" type="submit" value="Login" (click)="login()">
+      <input *ngIf="isLogin" class="submit" type="submit" value="Logout" (click)="logout()">
+    </div>
+  </div>
+</form>

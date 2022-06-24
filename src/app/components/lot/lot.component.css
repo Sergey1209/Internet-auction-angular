@@ -1,0 +1,37 @@
+.container{
+  display: inline-flex;
+  flex-wrap: wrap;
+  background-color: white;
+  width: 200px;
+  margin: 10px;
+}
+
+.image{
+  height: 200px;
+}
+
+.text-block{
+  padding: 5px;
+  text-align: left;
+  font-size: small;
+  padding-bottom: 10px;
+}
+
+.description{
+  height: 100px;
+  vertical-align: top;
+}
+
+.margin-right{
+  margin-right: 15px;
+}
+
+.center {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+}
+
+.border{
+  border: 2px solid green;
+}

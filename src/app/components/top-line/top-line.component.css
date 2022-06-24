@@ -1,0 +1,36 @@
+*{
+  background-color: cornflowerblue;
+  margin: 0px;
+  padding: 0px;
+  height: 20px;
+}
+.container{
+  display: inline;
+  position: relative;
+  text-align: left;
+  font-weight: 900;
+
+  /* flex-flow: row; */
+}
+.regBut{
+  position: absolute;
+  font-size: larger;
+  font-weight: 600;
+  top: 5px;
+  right: 5px;
+  width: 32px;
+  height: 32px;
+  border: 0px;
+  cursor: pointer;
+  background-image: url(Icons/register.png);
+  background-repeat: no-repeat;
+}
+
+button:hover{
+  transform: scale(0.9);
+}
+
+h2{
+  padding-left: 10px;
+  padding-top: 5px;
+}

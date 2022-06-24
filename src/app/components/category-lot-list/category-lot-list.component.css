@@ -1,0 +1,16 @@
+.category-list > div{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: auto;
+  max-height: 200px; 
+  min-height: 75px;
+  margin: auto;
+  border-top: 2px solid darkgray; 
+}
+
+.category button:hover{
+  border: 1px solid red;
+}
+
+
