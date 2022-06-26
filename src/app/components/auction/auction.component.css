@@ -1,0 +1,91 @@
+.container{
+  background-color: white;
+  width: 400px;
+  height: auto;
+  margin: 10px;
+  margin: auto;
+  margin-top: 200px;
+  border: 5px solid darkgrey;
+  font-size: larger;
+}
+
+.flex{
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.image{
+  display: flexbox;
+  height: 100%;
+  width: 100%;
+}
+
+.text-block{
+  margin: 15px;
+  text-align: left; 
+}
+
+.name{
+  height: auto;
+  vertical-align: top;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.description{
+  height: auto;
+  max-height: 400px;
+  min-height: 150px;
+  vertical-align: top;
+}
+
+.center {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.border{
+  border: 2px solid green;
+}
+
+.bet-block{
+  height: 40px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.btn{
+  height: 40px;
+  width: 70px;
+  margin-right: 25px;
+}
+
+.btn button{
+  height: 100%;
+  width: 100%;
+  margin: auto;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.bet{
+  height: 35px;
+  width: 100px;
+  margin-right: 50px;
+}
+
+.bet input:invalid{
+  border-color: red;
+}
+
+.bet input{
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+
+  justify-content: center;
+  align-items: center;
+}

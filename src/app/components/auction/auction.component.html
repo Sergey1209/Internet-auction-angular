@@ -1,0 +1,27 @@
+<ng-container *ngIf="lot">
+  <div class="container">
+    <div class="image"> 
+      <img  src={{lot.images[0]}} class="center">
+    </div>
+    <div class="text-block">
+      <div class="name">{{lot.name}}</div>
+      <div class="description">{{lot.description}}</div>
+      <p>End of auction: <BR>{{deadline}}</p>  
+      <div class=" bet-block">
+        <div class="flex btn">
+          <button class="">{{lot.initialPrice}} $</button>    
+        </div>
+        <div *ngIf="!isOwner" class="flex bet">
+          <input type="number" [(ngModel)]="bet" min="{{lot.initialPrice + 1}}" placeholder="Your bet">
+        </div>
+        <div *ngIf="!isOwner" class="flex btn ">
+          <button (click)="onBet()" id="btn-ok">OK</button>
+        </div>
+        <div *ngIf="isOwner btn" class="flex btn" >
+          <button (click)="onClickEdit()">Edit</button>
+        </div>
+      </div>
+      <BR>
+    </div>
+  </div>
+</ng-container>
