@@ -1,0 +1,26 @@
+.combobox-input {
+  border: none;
+  width: 100%;
+}
+.combobox-input:focus {
+  outline-style: none;
+}
+.combobox-options {
+  position: absolute;
+  background-color: white;
+  width: 350px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 2px 2px 2px 2px #ccc;
+  z-index: 1;
+}
+
+list-item {
+  display: block;
+  font-size: medium;
+  padding: 10px;
+}
+list-item:hover {
+  background-color: grey;
+  color: white;
+}
