@@ -30,11 +30,11 @@ export class LotComponent implements OnInit {
       this.deadline = pipe.transform(this.lot.deadline,'dd.MM.yyyy hh:mm:ss');
     }
 
-  constructor(private route: Router) {   }
+  constructor() {   }
 
   ngOnInit(): void {  }
 
-  onClickEdit(){
-    this.route.navigate([`/lot/edit/${this.lot?.id}`])
-  }
+  // onClickEdit(){
+  //   this.router.navigate([`/lot/edit/${this.lot?.id}`])
+  // }
 }

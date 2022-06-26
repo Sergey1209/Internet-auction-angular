@@ -19,11 +19,11 @@ export class LotsListComponent implements OnInit {
     }
 
   constructor(private lotService: LotService, private jwthelper: JwtHelperService, ) { 
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    this.userId = token ? jwthelper.decodeToken(token).sub : 0;
   }
 
   ngOnInit(): void { 
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    this.userId = token ? this.jwthelper.decodeToken(token).sub : 0;
   }
 
   fillLotList(categoryId:Number){

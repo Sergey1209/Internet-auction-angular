@@ -38,8 +38,8 @@ export class LotService {
     formData.append('description', lot?.description);
     formData.append('initialPrice', lot?.initialPrice.toString());
     formData.append('categoryId', lot?.categoryId.toString());
-    formData.append('deadline', lot?.deadline.toUTCString());
-    formData.append('ownerId', "0");
+    formData.append('deadline', lot?.deadline.toString());
+    formData.append('ownerId', lot.id > 0 ? lot?.ownerId.toString() : '0');
     for(var i=0; i< files.length; i++){
       formData.append('files', files[i]);
     }

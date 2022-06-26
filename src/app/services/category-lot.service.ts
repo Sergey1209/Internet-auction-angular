@@ -36,7 +36,6 @@ export class CategoryLotService {
       formData.append('files', files[i] );
     }
     
-
     if (lotCategory.id > 0 ){
       return this.httpClient.put<any>(url, formData)
     }

@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\components",
+    "\\src\\app\\services"
   ],
+  "SelectedNode": "\\src\\app\\services\\category-lot.service.ts",
   "PreviewInSolutionExplorer": false
 }

@@ -21,6 +21,7 @@ import { LotEditComponent } from './components/lot-edit/lot-edit.component';
 import { SelectImageComponent } from './components/select-image/select-image.component';
 import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 import { AuthGuard } from './guards/auth-guard';
+import { AuctionComponent } from './components/auction/auction.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -40,6 +41,7 @@ export function tokenGetter(){
     LotEditComponent,
     SelectImageComponent,
     ComboBoxComponent,
+    AuctionComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,7 @@ export function tokenGetter(){
       {path: 'login', component: AuthComponent},
       {path: 'lotcategory/add', component: LotCategoryEditComponent, canActivate: [AuthGuard]},
       {path: 'lotcategory/:id', component: LotCategoryEditComponent, canActivate: [AuthGuard]},
+      {path: 'lot/:id', component: AuctionComponent, canActivate: [AuthGuard]},
       {path: 'lot/edit/:id', component: LotEditComponent, canActivate: [AuthGuard]},
       {path: 'lot/add', component: LotEditComponent, canActivate: [AuthGuard]},
     ]),

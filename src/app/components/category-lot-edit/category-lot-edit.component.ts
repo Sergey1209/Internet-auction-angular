@@ -45,9 +45,12 @@ export class EditLotCategoryComponent implements OnInit, OnDestroy {
   }
   
   save(){
-    this.lotCategoryService.editLotCategory(this.lotCategory, [this.file as File]).subscribe();
-    this.ngOnDestroy();
-    this.router.navigate(['']);
+    this.lotCategoryService
+      .editLotCategory(this.lotCategory, [this.file as File])
+      .subscribe(x => {
+        this.ngOnDestroy();
+        this.router.navigate(['']);
+      });
   }
 
 }
