@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Lot } from 'src/app/models/lot';
 import { CategoryLot } from 'src/app/models/category-lot';
 import { CategoryLotService } from 'src/app/services/category-lot.service';
 

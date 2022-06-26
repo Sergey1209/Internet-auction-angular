@@ -6,9 +6,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./select-image.component.css']
 })
 export class SelectImageComponent implements OnInit {
-  file: File | null | undefined = null;
+  @Input()
+    file: File | null | undefined = null;
+
   urlValue: string = '';
- 
+  
   @Input()
     accept:string = '';
 

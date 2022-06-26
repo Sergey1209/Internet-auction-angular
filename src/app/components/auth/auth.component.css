@@ -16,7 +16,6 @@
   background-color: white;
   border-radius: 5px;
   background-color: whitesmoke;
-
 }
 
 .form-control{
@@ -90,5 +89,9 @@
 h2{
   color: midnightblue;
   margin-bottom: 25px;
+}
+
+.block a, button{
+  display:block;
 }
 

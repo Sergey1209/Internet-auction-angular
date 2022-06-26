@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators,  } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscriber, Subscription, pipe, tap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,10 +10,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  
+  private subscription = new Subscription();
   loginVisible = true;
   regVisible = false;
-
 
   form: FormGroup;
   
@@ -32,7 +32,7 @@ export class AuthComponent implements OnInit {
     const pass = this.form.get('pass')?.value;
 
     if (this.form.get('email')?.valid && this.form.get('pass')?.valid)
-      this.authService.login(login, pass).subscribe();
+      this.subscription.add(this.authService.login(login, pass).pipe(tap(x => this.toMain())).subscribe());
   }
 
   registration(){
@@ -41,11 +41,14 @@ export class AuthComponent implements OnInit {
     const nickname = this.form.get('nickname')?.value;
 
     if (this.form.valid)
-      this.authService.register(login, pass, nickname).subscribe();
+      this.subscription.add(this.authService.register(login, pass, nickname).pipe(tap(x => this.toMain())).subscribe());
   }
 
-  toMain(){
-    this.router.navigate(['']);
+  toMain(){  
+    if (this.isLogin){
+      this.subscription.unsubscribe();
+      this.router.navigate(['']);
+    }
   }
 
   toggleButton(){
@@ -54,12 +57,11 @@ export class AuthComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('nickname');
+    this.authService.logout();
   }
 
   public get isLogin(): boolean {
-    return (localStorage.getItem('token') !== null);
+    return this.authService.isAuthenticated();
   }
 
 }

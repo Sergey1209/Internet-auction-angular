@@ -12,6 +12,6 @@ export class TopLineComponent  {
   constructor(private route: Router) { }
 
   onClickLogin(){
-    this.route.navigate(['/auth']);
+    this.route.navigate(['/login']);
   }
 }

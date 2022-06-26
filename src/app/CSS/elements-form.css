@@ -16,13 +16,14 @@
 .items 
 input, 
 textarea
+,app-combo-box
 {
-  height: 45px;
+  height: 25px;
   min-width: 90%;
   max-width: 90%;
   margin: auto;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 3px;
+  padding: 10px;
   border-radius: 5px;
   border: 1px solid transparent;
   font-size: medium;
@@ -33,13 +34,14 @@ textarea
 
 .items 
 input:hover, 
-textarea:hover{
+textarea:hover
+,app-combo-box:hover
+{
   border: 1px solid brown;
 }
 
 .form{
-  padding: 10px;
-  padding-top: 30px;
+  padding: 20px;
   margin-top: 100px;
   height: auto;
   width: 100%;
@@ -59,7 +61,7 @@ textarea{
 
 .submit div{
   height: auto;
-  width: 100%;
+  width: 50%;
   margin-top: 10px;
 }
 
@@ -71,6 +73,7 @@ button{
   margin-left: auto;
   margin-right: auto;
   border: 1px solid;
+  padding: 10px;
 }
 
 .submit button:hover{

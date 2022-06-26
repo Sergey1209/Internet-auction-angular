@@ -16,39 +16,36 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient, 
-    private router: Router, 
     private jwthelper: JwtHelperService, 
     @Inject(AUTH_API_URL) private apiUrl: string
     ) {  }
 
   login(email: string, pass: string) : Observable<Token> {
     const body = {email: email, password: pass};
-    return this.httpClient.post<Token>(`${this.baseApiUrl}/login`, body)
-      .pipe(tap(token => {
-        localStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
-        this.router.navigate(['']);
-      }));
+    const url = `${this.baseApiUrl}/login`;
+    
+    return this.httpClient.post<Token>(url, body)
+      .pipe(tap(token => this.saveToken(token)));
   }
 
   register(email: string, pass: string, nickname: string) : Observable<Token> {
     const body = {email: email, password: pass, nickname: nickname};
-    
     const url = `${this.baseApiUrl}/registration`;
-    alert(url);
+    
     return this.httpClient.post<Token>(url, body)
-      .pipe(tap(token => {
-        localStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
-        this.router.navigate(['']);
-      }));
+      .pipe(tap(token => this.saveToken(token)));
   }
 
-  isAuthenticated() : boolean{
-    var token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    return token ? this.jwthelper.isTokenExpired(token) : false;
+  private saveToken(token: Token){
+    localStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
+  }
+
+  public isAuthenticated() : boolean{
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    return token ? !this.jwthelper.isTokenExpired(token) : false;
   }
 
   logout(){
     localStorage.removeItem(ACCESS_TOKEN_KEY);
-    this.router.navigate(['']);
   }
 }

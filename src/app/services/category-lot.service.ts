@@ -9,7 +9,7 @@ import { CategoryLot } from '../models/category-lot';
   providedIn: 'root'
 })
 export class CategoryLotService {
-  private baseApiUrl = `${this.apiUrl}api/`;
+  private baseApiUrl = `${this.apiUrl}api`;
 
   constructor(
     private httpClient: HttpClient,
@@ -17,17 +17,17 @@ export class CategoryLotService {
     ) {  }
   
   getLotCategories() : Observable<CategoryLot[]>{
-    const url = `${this.baseApiUrl}${serviceNames.lotCategory}`;
+    const url = `${this.baseApiUrl}/${serviceNames.lotCategory}`;
     return this.httpClient.get<CategoryLot[]>(url);
   }
 
   getLotCategoryById(id: string) : Observable<CategoryLot> {
-    const url = `${this.baseApiUrl}${serviceNames.lotCategory}/${id}`;
+    const url = `${this.baseApiUrl}/${serviceNames.lotCategory}/${id}`;
     return this.httpClient.get<CategoryLot>(url);
   }
 
   editLotCategory(lotCategory: CategoryLot, files: File[]) : Observable<any>{
-    const url = `${this.baseApiUrl}${serviceNames.lotCategory}`;
+    const url = `${this.baseApiUrl}/${serviceNames.lotCategory}`;
     const formData: FormData = new FormData();
 
     formData.append('name', lotCategory?.name );

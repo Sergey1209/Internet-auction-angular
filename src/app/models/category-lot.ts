@@ -8,4 +8,8 @@ export class CategoryLot {
     this.name = name;
     this.urlIcon = iconPath;
   }
+
+  toString(){
+    return this.name;
+  }
 }

@@ -1,9 +1,9 @@
 ﻿<body>
-    <div class="container">
-      <div class="top-nav">
-        <a [routerLink]="['']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <!-- <a [routerLink]="['/Home']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">Home</a> -->
-      </div>
-      <router-outlet></router-outlet>
+  <div class="container">
+    <div class="top-nav">
+      <a [routerLink]="['/home']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">Home</a>
     </div>
-  </body>
+    <app-top-line></app-top-line>
+    <router-outlet></router-outlet>
+  </div>
+</body>

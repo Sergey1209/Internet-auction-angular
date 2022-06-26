@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Input, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +19,8 @@ import { LotsListComponent } from './components/lot-list/lot-list.component';
 import { LotComponent } from './components/lot/lot.component';
 import { LotEditComponent } from './components/lot-edit/lot-edit.component';
 import { SelectImageComponent } from './components/select-image/select-image.component';
+import { ComboBoxComponent } from './components/combo-box/combo-box.component';
+import { AuthGuard } from './guards/auth-guard';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -37,6 +39,7 @@ export function tokenGetter(){
     LotComponent,
     LotEditComponent,
     SelectImageComponent,
+    ComboBoxComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,13 +54,12 @@ export function tokenGetter(){
     }),
     RouterModule.forRoot([
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'auth', component: AuthComponent},
       {path: 'home', component: HomeComponent},
-      {path: 'lotCategory', component: LotCategoriesListComponent},
-      {path: 'lotcategory/add', component: LotCategoryEditComponent},
-      {path: 'lotcategory/:id', component: LotCategoryEditComponent},
-      {path: 'lot/edit/:id', component: LotEditComponent},
-      {path: 'lot/add', component: LotEditComponent},
+      {path: 'login', component: AuthComponent},
+      {path: 'lotcategory/add', component: LotCategoryEditComponent, canActivate: [AuthGuard]},
+      {path: 'lotcategory/:id', component: LotCategoryEditComponent, canActivate: [AuthGuard]},
+      {path: 'lot/edit/:id', component: LotEditComponent, canActivate: [AuthGuard]},
+      {path: 'lot/add', component: LotEditComponent, canActivate: [AuthGuard]},
     ]),
   ],
   providers: [{

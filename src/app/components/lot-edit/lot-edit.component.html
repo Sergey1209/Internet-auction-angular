@@ -4,29 +4,35 @@
       <div class="flex">
         <div>
           <label>Name:</label>
-          <input type="text" name="name" [(ngModel)]="this.lot.name" required="REQUIRED" minlength="2" placeholder="">        
+          <input type="text" name="name" [(ngModel)]="this.lot.name" required="REQUIRED" minlength="2">        
         </div>
         <div>
           <label>Description:</label>
-          <textarea name="description" cols="30" rows="20" [(ngModel)]="this.lot.description" placeholder=""></textarea>
+          <textarea name="description" cols="30" rows="20" [(ngModel)]="this.lot.description"></textarea>
         </div>
         <div>
-          <label>Deadline:</label>
-          <input type="datetime-local" name="deadline" [(ngModel)]="this.lot.deadline">
+          <label>Deadline:</label>        
+          <input type="datetime-local" name="deadline" [ngModel]="this.lot.deadline | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="dateChanged($event)">
+        </div>
+        <div>
+          <label>Category:</label>
+          <app-combo-box [categoryId]="lot.categoryId" (onSelectedCategory)="this.lot.categoryId=$event"></app-combo-box>
         </div>
         <div>
           <label>Initia price:</label>
           <input type="number" name="initialPrice" [(ngModel)]="this.lot.initialPrice">
         </div>         
       </div>
-      <app-select-image [url]="imgUrl1" accept=".jpg,.jpeg" (onChangedUrl)="this.file1 = $event"></app-select-image>
-      <app-select-image [url]="imgUrl2" accept=".jpg,.jpeg" (onChangedUrl)="this.file2 = $event"></app-select-image>
-      <app-select-image [url]="imgUrl3" accept=".jpg,.jpeg" (onChangedUrl)="this.file3 = $event"></app-select-image>
+      <div class="images">
+        <app-select-image [url]="imgUrl1" accept=".jpg,.jpeg" [file]="this.file1" (onChangedUrl)="this.file1 = $event"></app-select-image>
+        <app-select-image [url]="imgUrl2" accept=".jpg,.jpeg" [file]="this.file2" (onChangedUrl)="this.file2 = $event"></app-select-image>
+        <app-select-image [url]="imgUrl3" accept=".jpg,.jpeg" [file]="this.file3" (onChangedUrl)="this.file3 = $event"></app-select-image>
+      </div>
       <div class="flex">
         <div class="submit">
           <button type="submit" (click)="save()">OK</button> 
         </div> 
-      </div>
+      </div>      
     </form>    
   </div>
 </div>

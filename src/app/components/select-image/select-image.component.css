@@ -2,6 +2,7 @@
   height: auto;
   width: auto;
   margin: auto;
+  padding: 5px;
 }
 
 .img {
@@ -15,17 +16,15 @@
 .remove{
   position: absolute;
   right: 0px;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
-  border: 1px solid transparent;
-  background-color: darkgray;
-  font-size: x-small;
-  font-weight: 900;
+  border: none;
+  font-size: medium;
 }
 
 .remove:hover{
-  background-color: red;
+  background-color: rgb(194, 194, 194);
 }
 
 .img input{ 

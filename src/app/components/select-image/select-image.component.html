@@ -4,6 +4,6 @@
     <input type="image" src={{this.urlValue}} alt=''>
   </div>   
   <div class="input-img">
-    <input type="file" id="myInputFileId" (change)="this.onFileSelected($event)" accept="{{this.accept}}">
+    <input type="file" id="myInputFileId" [ngModel]="file" (change)="this.onFileSelected($event)" accept="{{this.accept}}">
   </div>
 </form>
