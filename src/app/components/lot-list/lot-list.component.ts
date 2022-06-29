@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Lot } from 'src/app/models/lot';
-import { ACCESS_TOKEN_KEY } from 'src/app/services/auth.service';
+import { UserToken } from 'src/app/models/user-token';
 import { LotService } from 'src/app/services/lot.service';
 
 @Component({
@@ -10,24 +9,43 @@ import { LotService } from 'src/app/services/lot.service';
   styleUrls: ['./lot-list.component.css']
 })
 export class LotsListComponent implements OnInit {
+  baseLots: Lot[] = [];
   lots: Lot[] | null = null;
-  userId: number= 0;
+  searchString: string = '';
 
   @Input()
     set lotCategoryId(id: Number){   
       this.fillLotList(id);
     }
+  @Input()
+    set setSearch(val: string){
+      this.searchString = val.trim();
+      this.filterLots();
+    }
 
-  constructor(private lotService: LotService, private jwthelper: JwtHelperService, ) { 
+  constructor(
+    private lotService: LotService, 
+    public userToken: UserToken) { 
   }
 
-  ngOnInit(): void { 
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    this.userId = token ? this.jwthelper.decodeToken(token).sub : 0;
+  ngOnInit(): void {     
   }
 
   fillLotList(categoryId:Number){
-    this.lotService.getlotsByCategory(categoryId).subscribe(data => this.lots = data);
+    this.lotService.getlotsByCategory(categoryId).subscribe(data => {
+      this.baseLots = data;
+      this.filterLots();
+    });
+    
+  }
+
+  filterLots(){
+    if (this.searchString){
+      this.lots = this.baseLots?.filter(x => x.name.includes(this.searchString.trim())); 
+    }
+    else{
+      this.lots = this.baseLots;
+    }
   }
 
 }

@@ -17,7 +17,9 @@ button{
   float: left;
   height: 30px;
   margin: 5px;
-  background-color: red;
 }
 
-
+.search{
+  margin-left: 10px;
+  padding-left: 5px;
+}

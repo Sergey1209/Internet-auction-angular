@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Lot } from './models/lot';
-import { CategoryLot } from './models/category-lot';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +7,4 @@ import { CategoryLot } from './models/category-lot';
 })
 export class AppComponent {
   title = 'Internet Auction';
-
 }

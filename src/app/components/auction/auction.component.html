@@ -1,27 +1,34 @@
-<ng-container *ngIf="lot">
+<ng-container *ngIf="auction && isEnabledAuction">
   <div class="container">
     <div class="image"> 
-      <img  src={{lot.images[0]}} class="center">
+      <img *ngIf="auction.lotImages[0]" src={{auction.lotImages[0]}} class="center">
+      <img *ngIf="auction.lotImages[1]" src={{auction.lotImages[1]}} class="center">
+      <img *ngIf="auction.lotImages[2]" src={{auction.lotImages[2]}} class="center">
     </div>
     <div class="text-block">
-      <div class="name">{{lot.name}}</div>
-      <div class="description">{{lot.description}}</div>
+      <div class="name">{{auction.lotName}}</div>
+      <div class="description">{{auction.lotDescription}}</div>
       <p>End of auction: <BR>{{deadline}}</p>  
-      <div class=" bet-block">
+      Customer: {{auction.customerNickname}}
+      <div class="flex bet-block">
         <div class="flex btn">
-          <button class="">{{lot.initialPrice}} $</button>    
+          <button>{{auction.betValue}} $</button>    
         </div>
+        <div class="flex btn-reset">
+          <button (click)="updateBet()"></button>
+        </div>
+      </div>
+      <div class="bet-block">
         <div *ngIf="!isOwner" class="flex bet">
-          <input type="number" [(ngModel)]="bet" min="{{lot.initialPrice + 1}}" placeholder="Your bet">
+          <input id="input-bet" type="number" [(ngModel)]="bet" min="{{auction.betValue + 1}}" placeholder="Your bet">
         </div>
-        <div *ngIf="!isOwner" class="flex btn ">
+        <div *ngIf="!isOwner && isEnabledAuction()" class="flex btn-ok">
           <button (click)="onBet()" id="btn-ok">OK</button>
         </div>
         <div *ngIf="isOwner btn" class="flex btn" >
-          <button (click)="onClickEdit()">Edit</button>
+          <button type="submit" (click)="onClickEdit()">Edit</button>
         </div>
       </div>
-      <BR>
     </div>
   </div>
 </ng-container>

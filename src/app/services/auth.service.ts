@@ -1,7 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { AUTH_API_URL } from '../app.injection-tokens';
 import { Observable, tap } from 'rxjs';
 import { Token } from '../models/token';
@@ -16,7 +14,6 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient, 
-    private jwthelper: JwtHelperService, 
     @Inject(AUTH_API_URL) private apiUrl: string
     ) {  }
 
@@ -38,11 +35,6 @@ export class AuthService {
 
   private saveToken(token: Token){
     localStorage.setItem(ACCESS_TOKEN_KEY, token.access_token);
-  }
-
-  public isAuthenticated() : boolean{
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    return token ? !this.jwthelper.isTokenExpired(token) : false;
   }
 
   logout(){

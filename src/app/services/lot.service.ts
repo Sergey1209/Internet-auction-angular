@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { observable, Observable } from 'rxjs';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { AUCTION_API_URL } from '../app.injection-tokens';
 import { serviceNames } from '../Functions/backend';
 import { Lot } from '../models/lot';
@@ -29,6 +30,13 @@ export class LotService {
     return this.httpClient.get<Lot>(url);
   }
 
+  getlotsBySearch(searchString: string): Observable<Lot[]>{
+    const url = `${this.urlLot}/search`;
+    let headers = new HttpHeaders();
+    headers.append('searchString', searchString);
+    return this.httpClient.get<Lot[]>(url, {headers: headers});
+  }
+
   saveLot(lot: Lot, files: File[]) : Observable<any>{
     const url = this.urlLot;
     const formData: FormData = new FormData();
@@ -50,5 +58,10 @@ export class LotService {
     else {
       return this.httpClient.post<any>(url, formData);
     }
+  }
+
+  Delete(lotId: number):Observable<any>{
+    const url = `${this.urlLot}/${lotId}`;
+    return this.httpClient.delete(url);
   }
 }

@@ -1,5 +1,6 @@
 import { Component,  OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import { UserToken } from 'src/app/models/user-token';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,13 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private route: Router) {  }
+  constructor(
+    private route: Router,
+    public userToken: UserToken) {  }
   
   selectedLotCategoryid: Number = 0;
+  searchString: string = '';
+  searchStringEmit: string = '';
 
   ngOnInit(): void {
   }
@@ -29,6 +34,12 @@ export class HomeComponent implements OnInit {
 
   handleSelectedCategory(categoryid: number){
     this.selectedLotCategoryid = categoryid;
+  }
+
+  onKeyPressSearch(event: KeyboardEvent){
+    if (event.key === 'Enter') {
+      this.searchStringEmit = this.searchString;
+    }
   }
 
 }

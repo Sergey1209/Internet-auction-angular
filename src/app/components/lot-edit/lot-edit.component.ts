@@ -1,9 +1,8 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
 import { Lot } from 'src/app/models/lot';
-import { ACCESS_TOKEN_KEY, AuthService } from 'src/app/services/auth.service';
+import { UserToken } from 'src/app/models/user-token';
 import { LotService } from 'src/app/services/lot.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { LotService } from 'src/app/services/lot.service';
 })
 export class LotEditComponent implements OnInit {
   private subscription = new Subscription();
-  lot: Lot = new Lot(0, '', '', 0, [], new Date(Date.now()), 0, '', 0);
+  lot: Lot = new Lot(0, '', '', 0, [], new Date(Date.now()), 0, '', 0, 0, 0);
 
   file1: File | null | undefined = null;
   file2: File | null | undefined = null;
@@ -31,18 +30,16 @@ export class LotEditComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private lotService:LotService,
     private router: Router,
-    private authService: AuthService,
-    private jwthelper: JwtHelperService,
+    private userToken: UserToken
   ){  }
 
   ngOnInit(): void {
     const id = this.activeRoute.snapshot.paramMap.get('id'); 
     if (id != null && id != '0' && id != ''){  
       this.subscription.add(this.lotService.getLotById(id).subscribe(lot => {      
-        const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-        const userId = token ? this.jwthelper.decodeToken(token).sub : 0;
-        if (Number(userId) !== Number(lot.ownerId)){
+        if (Number(this.userToken.userId) !== Number(lot.ownerId)){
           this.router.navigate(['/home']);
+          return;
         }
         this.lot = lot;
       }));
@@ -59,7 +56,7 @@ export class LotEditComponent implements OnInit {
   }
 
   save(){
-    if (!this.authService.isAuthenticated()){
+    if (!this.userToken.isAuthenticated){
       this.router.navigate(['/login']);
     }
     else{
@@ -69,7 +66,6 @@ export class LotEditComponent implements OnInit {
 
   dateChanged(date:Date){
     this.lot.deadline = date;
-    
   }
 
   cancel(){

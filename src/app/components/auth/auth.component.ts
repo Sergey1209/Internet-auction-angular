@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators,  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscriber, Subscription, pipe, tap } from 'rxjs';
+import { UserToken } from 'src/app/models/user-token';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,8 +17,12 @@ export class AuthComponent implements OnInit {
 
   form: FormGroup;
   
-  constructor(private router: Router, private authService: AuthService) { 
-    this.form = new FormGroup({
+  constructor(
+    private router: Router, 
+    private authService: AuthService,
+    private userToken: UserToken) { 
+    
+      this.form = new FormGroup({
       'nickname': new FormControl('nickname', Validators.compose([Validators.required, Validators.minLength(2)])),
       'email' : new FormControl('mail12@gmail.com',  Validators.compose([Validators.required, Validators.email])),
       'pass' : new FormControl('pass2', [Validators.required, Validators.minLength(2)])
@@ -61,7 +66,7 @@ export class AuthComponent implements OnInit {
   }
 
   public get isLogin(): boolean {
-    return this.authService.isAuthenticated();
+    return this.userToken.isAuthenticated;
   }
 
 }

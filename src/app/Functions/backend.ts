@@ -5,4 +5,5 @@ export abstract class  serviceNames{
   public static readonly downloadImage = 'files';
   public static readonly auth = 'auth';
   public static readonly registration = 'registration'; 
+  public static readonly auction = 'auction'; 
 }

@@ -1,11 +1,10 @@
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
-import { Lot } from 'src/app/models/lot';
-import { ACCESS_TOKEN_KEY } from 'src/app/services/auth.service';
-import { LotService } from 'src/app/services/lot.service';
+import { Auction } from 'src/app/models/Auction';
+import { UserToken } from 'src/app/models/user-token';
+import { AuctionService } from 'src/app/services/auction.service';
 
 @Component({
   selector: 'app-auction',
@@ -13,61 +12,96 @@ import { LotService } from 'src/app/services/lot.service';
   styleUrls: ['./auction.component.css']
 })
 export class AuctionComponent implements OnInit {
-  lot: Lot = new Lot(0, '', '', 0, [], new Date(Date.now()), 0, '', 0);
+  auction: Auction = new Auction(0, 0, '', 0, new Date(Date.now()), '', '',[]);
   subscription = new Subscription();
   isOwner:  boolean = false;
   deadline: string | null = null;
   betValue: number = 0;
+  id: number = 0;
 
   get bet(){
     return this.betValue;
   }
+
   set bet(val: number){
     if (val > 1){
-      var roundVal = Number.parseInt(val.toString()) + 1;
+      var roundVal = Number.isInteger(val) ? val : Number.parseInt(val.toString()) + 1;
       this.betValue = roundVal;
     }
   }
 
   get betIsTrue(){
-    return this.betValue > this.lot.initialPrice;
+    return this.betValue > this.auction.betValue;
   }
 
   constructor(
-    private activeRoute: ActivatedRoute,
-    private lotService:LotService,
-    private jwthelper: JwtHelperService,
-    private router: Router) {
+        private activeRoute: ActivatedRoute,
+        private auctionService:AuctionService,
+        private router: Router,
+        private userToken: UserToken) {
 
-    const id = this.activeRoute.snapshot.paramMap.get('id'); 
-    if (id != null && id != '0' && id != ''){  
-      this.subscription.add(this.lotService.getLotById(id).subscribe(lot => {
-        this.lot = lot;
-        this.setData();
-        this.betValue = lot.initialPrice + 1;
-      }));
+    const id = this.activeRoute.snapshot.paramMap.get('id') ?? ''; 
+    if(id || Number.isInteger(id)){
+      this.id = Number(id);
+      this.loadAuction();
     }
+    else {
+      this.router.navigate(['/home']);
+      return;
+    }     
   }
 
   ngOnInit(): void {
   }
 
-  private setData(){
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    const userId = token ? this.jwthelper.decodeToken(token).sub : 0;
-    this.isOwner = Number(this.lot?.ownerId) === Number(userId);
+  private isAuthenticated(){
+    if (!this.userToken.isAuthenticated){
+      this.router.navigate(['/login']);
+      return false;
+    }
+    return true;
+  }
 
+  private loadAuction(){
+    if (this.isAuthenticated()) {
+      this.subscription.add(this.auctionService.getAuctionById(this.id).subscribe(auction => {
+        this.auction = auction;
+        this.setData();
+      }));
+    }
+  }
+
+  private setData(){
+    this.isOwner = Number(this.auction?.ownerId) === Number(this.userToken.userId);
     const datePipe = new DatePipe('en-US');
-    this.deadline = datePipe.transform(this.lot.deadline,'dd.MM.yyyy hh:mm:ss');
+    this.deadline = datePipe.transform(this.auction.deadline,'dd.MM.yyyy hh:mm:ss');
+  }
+
+  isEnabledAuction() {
+     return this.isAuthenticated() && Date.parse(this.auction.deadline.toString()) > Date.parse(new Date(Date.now()).toString())
   }
 
   onClickEdit(){
-    this.router.navigate([`/lot/edit/${this.lot?.id}`])
+    if (this.isAuthenticated()){
+      this.router.navigate([`/lot/edit/${this.auction.lotId}`])
+    }
   }
 
   onBet(){
-    
+    if (this.isAuthenticated()){
+      if (this.isEnabledAuction() && this.betIsTrue){
+        this.auctionService.setBet(this.id, this.betValue).subscribe(x => this.updateBet());
+      }  
+    }
+  }
+
+  updateBet(){
+    if (this.isAuthenticated()){    
+      this.subscription.add(this.auctionService.getLastBetValue(this.id).subscribe(res => {
+        this.auction.betValue = res.betValue;
+        this.auction.customerNickname = res.customerNickname;
+      }));
+    }
   }
   
-
 }

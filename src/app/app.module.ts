@@ -22,6 +22,8 @@ import { SelectImageComponent } from './components/select-image/select-image.com
 import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 import { AuthGuard } from './guards/auth-guard';
 import { AuctionComponent } from './components/auction/auction.component';
+import { UserToken } from './models/user-token';
+import { AdminGuardGuard as AdminGuard } from './guards/admin-guard.guard';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -58,11 +60,12 @@ export function tokenGetter(){
       {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},
       {path: 'login', component: AuthComponent},
-      {path: 'lotcategory/add', component: LotCategoryEditComponent, canActivate: [AuthGuard]},
-      {path: 'lotcategory/:id', component: LotCategoryEditComponent, canActivate: [AuthGuard]},
+      {path: 'lotcategory/add', component: LotCategoryEditComponent, canActivate: [AdminGuard]},
+      {path: 'lotcategory/:id', component: LotCategoryEditComponent, canActivate: [AdminGuard]},
       {path: 'lot/:id', component: AuctionComponent, canActivate: [AuthGuard]},
       {path: 'lot/edit/:id', component: LotEditComponent, canActivate: [AuthGuard]},
       {path: 'lot/add', component: LotEditComponent, canActivate: [AuthGuard]},
+      {path: 'auction/:id', component: AuctionComponent, canActivate: [AuthGuard]},
     ]),
   ],
   providers: [{

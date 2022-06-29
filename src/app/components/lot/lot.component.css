@@ -4,6 +4,7 @@
   background-color: white;
   width: 200px;
   margin: 10px;
+  margin-bottom: 0px;
 }
 
 .image{
@@ -14,9 +15,10 @@
 
 .text-block{
   padding: 5px;
+  height: 140px;
   text-align: left;
   font-size: small;
-  padding-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .name{
@@ -36,4 +38,9 @@
 
 .border{
   border: 2px solid green;
+}
+
+a{
+  margin: 0px;
+  margin-right: 10px;
 }

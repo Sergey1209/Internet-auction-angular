@@ -2,18 +2,36 @@
   background-color: cornflowerblue;
   margin: 0px;
   padding: 0px;
-  height: 20px;
+  height: 40px;
 }
 .container{
   display: inline;
   position: relative;
   text-align: left;
   font-weight: 900;
-
-  /* flex-flow: row; */
 }
-.regBut{
+
+.div1{
   position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  right: 10px;
+  top: 5px;
+}
+
+.div1 
+input{
+  margin-top: 3px;
+  margin-right: 20px;
+  height: 30px;
+  border-radius: 3px;
+  background-color: aliceblue;
+  border: 0px;
+  padding-left: 10px;
+}
+
+.regBut{
+  /* position: absolute; */
   font-size: larger;
   font-weight: 600;
   top: 5px;

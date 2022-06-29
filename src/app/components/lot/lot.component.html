@@ -1,4 +1,4 @@
-<ng-container *ngIf="lot">
+<ng-container *ngIf="lot && isValidAuction">
   <div class="container">
     <div class="image"> 
       <img src={{lot.images[0]}} class="center">
@@ -7,9 +7,13 @@
       <div class="name">{{lot.name}}</div>
       <p>End of auction:<BR>{{deadline}}</p>   
       <div>
-        <button class="margin-right">{{lot.initialPrice}} $</button>    
-        <a *ngIf="!isOwner" href="./lot/{{this.lot.id}}">Make a bet</a>
-        <a *ngIf="isOwner" href="./lot/edit/{{this.lot.id}}">Edit</a>
+        <button class="margin-right">{{lot.betValue}} $</button>    
+        <a href="./lot/{{this.lot.auctionId}}">Make a bet</a>
+        <p>
+          <a *ngIf="isOwner" href="./lot/edit/{{this.lot.id }}">Edit</a>
+          <a *ngIf="isOwner || isAdmin" href="" (click)="onDelete()">Delete</a>
+          <a *ngIf="!isOwner && !isAdmin"></a>
+        </p>   
       </div>
       <BR>
     </div>
