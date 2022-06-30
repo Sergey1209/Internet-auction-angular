@@ -2,6 +2,7 @@
   <div class="container">
     <div class="form">
       <h2>Welcome to Internet auction</h2>
+      <p class="err" *ngIf="hasError">invalid email or password</p>
       <div *ngIf="!isLogin">
         <div *ngIf="regVisible">
           <p class="err-mesg" *ngIf="form.controls['nickname'].invalid && form.controls['nickname'].touched">Nickname is not valid!</p>

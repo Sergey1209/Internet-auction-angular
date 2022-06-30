@@ -8,9 +8,9 @@
       <p>End of auction:<BR>{{deadline}}</p>   
       <div>
         <button class="margin-right">{{lot.betValue}} $</button>    
-        <a href="./lot/{{this.lot.auctionId}}">Make a bet</a>
+        <a href="./auction/{{this.lot.auctionId}}">Make a bet</a>
         <p>
-          <a *ngIf="isOwner" href="./lot/edit/{{this.lot.id }}">Edit</a>
+          <a *ngIf="isOwner" href="./lot/{{this.lot.id }}">Edit</a>
           <a *ngIf="isOwner || isAdmin" href="" (click)="onDelete()">Delete</a>
           <a *ngIf="!isOwner && !isAdmin"></a>
         </p>   

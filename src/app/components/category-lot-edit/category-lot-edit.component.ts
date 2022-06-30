@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { CategoryLot } from 'src/app/models/category-lot';
 import { CategoryLotService } from 'src/app/services/category-lot.service';
 
@@ -47,10 +47,11 @@ export class EditLotCategoryComponent implements OnInit, OnDestroy {
   save(){
     this.lotCategoryService
       .editLotCategory(this.lotCategory, [this.file as File])
-      .subscribe(x => {
+      .pipe(tap(x => {
         this.ngOnDestroy();
-        this.router.navigate(['']);
-      });
+        this.router.navigate(['/home']);
+      }))
+      .subscribe();
   }
 
 }

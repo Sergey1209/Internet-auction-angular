@@ -32,30 +32,14 @@ export class SelectImageComponent implements OnInit {
     onChangedUrl = new EventEmitter<File | null | undefined>();
 
   @Input()
-  set url(url: string){
-    this.urlValue = url;
-    var blob = this.httpClient.get<File>(url, {});
-    const arr = url.split('/');
-    const name = arr[arr.length-1];
-    const file = this.getFile(url, name);
-    this.onChangedUrl.emit(file);
-  }
-
-  getFile(url: string, fileName: string){
-    var bytes = url.split(',')[0].indexOf('base64') >= 0 ?
-              atob(url.split(',')[1]) :
-              (<any>window).unescape(url.split(',')[1]);
-    var mime = url.split(',')[0].split(':')[1].split(';')[0];
-    var max = bytes.length;
-    var ia = new Uint8Array(max);
-    for (var i = 0; i < max; i++) {
-      ia[i] = bytes.charCodeAt(i);    
+    set url(url: string){
+      if (url){
+        this.urlValue = url;
+      }
     }
-    var newImageFileFromCanvas = new File([ia], fileName, { type: mime });
-    return newImageFileFromCanvas;
-  }
 
   reset(){
+    this.urlValue = '';
     this.onChangedUrl.emit(null);
   }
 

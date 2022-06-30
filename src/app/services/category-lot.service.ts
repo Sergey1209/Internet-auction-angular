@@ -31,10 +31,8 @@ export class CategoryLotService {
     const formData: FormData = new FormData();
 
     formData.append('name', lotCategory?.name );
-    formData.append('id', lotCategory?.id.toString() );
-    for(var i=0; i< files.length; i++){
-      formData.append('files', files[i] );
-    }
+    formData.append('id', lotCategory?.id.toString());
+    formData.append('file', files[0] );
     
     if (lotCategory.id > 0 ){
       return this.httpClient.put<any>(url, formData)

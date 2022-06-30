@@ -37,7 +37,7 @@ export class LotService {
     return this.httpClient.get<Lot[]>(url, {headers: headers});
   }
 
-  saveLot(lot: Lot, files: File[]) : Observable<any>{
+  saveLot(lot: Lot, files: (File|string)[] ) : Observable<any>{
     const url = this.urlLot;
     const formData: FormData = new FormData();
 
@@ -48,8 +48,13 @@ export class LotService {
     formData.append('categoryId', lot?.categoryId.toString());
     formData.append('deadline', lot?.deadline.toString());
     formData.append('ownerId', lot.id > 0 ? lot?.ownerId.toString() : '0');
+    
     for(var i=0; i< files.length; i++){
-      formData.append('files', files[i]);
+      const file = files[i];
+      if (file){
+        const key = typeof file === 'string' ? 'notChangedfiles' : 'files';
+        formData.append(key, files[i]);
+      }
     }
     
     if (lot.id > 0 ){

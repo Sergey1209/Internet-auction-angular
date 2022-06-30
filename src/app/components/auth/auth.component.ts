@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators,  } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscriber, Subscription, pipe, tap } from 'rxjs';
+import { Subscriber, Subscription, pipe, tap, catchError, throwError } from 'rxjs';
 import { UserToken } from 'src/app/models/user-token';
 import { AuthService } from '../../services/auth.service';
 
@@ -37,8 +37,20 @@ export class AuthComponent implements OnInit {
     const pass = this.form.get('pass')?.value;
 
     if (this.form.get('email')?.valid && this.form.get('pass')?.valid)
-      this.subscription.add(this.authService.login(login, pass).pipe(tap(x => this.toMain())).subscribe());
+      this.subscription.add(this.authService
+        .login(login, pass)
+        .pipe(catchError(err => {
+          this.hasError = true;
+          return throwError(err);
+        }))
+        .pipe(tap(x => {
+          this.toMain();
+          this.hasError = false;
+        }))
+        .subscribe());
   }
+
+  hasError = false;
 
   registration(){
     const login = this.form.get('email')?.value;  

@@ -40,9 +40,9 @@ export class LotComponent implements OnInit {
       this.isAdmin = this.userToken.isAdmin;
     }
 
-    onDelete(){
-      if ((this.isAdmin || this.isOwner) && this.lot?.id)
-        this.lotService.Delete(this.lot?.id).subscribe(x => this.router.navigate(['/home']));
-    }
+  onDelete(){
+    if ((this.isAdmin || this.isOwner) && this.lot?.id)
+      this.lotService.Delete(this.lot?.id).subscribe(x => this.router.navigate(['/home']));
+  }
 
 }

@@ -15,6 +15,7 @@ export class AuctionComponent implements OnInit {
   auction: Auction = new Auction(0, 0, '', 0, new Date(Date.now()), '', '',[]);
   subscription = new Subscription();
   isOwner:  boolean = false;
+  isAdmin:  boolean = false;
   deadline: string | null = null;
   betValue: number = 0;
   id: number = 0;
@@ -73,6 +74,7 @@ export class AuctionComponent implements OnInit {
 
   private setData(){
     this.isOwner = Number(this.auction?.ownerId) === Number(this.userToken.userId);
+    this.isAdmin = this.userToken.isAdmin;
     const datePipe = new DatePipe('en-US');
     this.deadline = datePipe.transform(this.auction.deadline,'dd.MM.yyyy hh:mm:ss');
   }
@@ -83,7 +85,7 @@ export class AuctionComponent implements OnInit {
 
   onClickEdit(){
     if (this.isAuthenticated()){
-      this.router.navigate([`/lot/edit/${this.auction.lotId}`])
+      this.router.navigate([`/lot/${this.auction.lotId}`])
     }
   }
 

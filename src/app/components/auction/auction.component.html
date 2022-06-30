@@ -18,14 +18,14 @@
           <button (click)="updateBet()"></button>
         </div>
       </div>
-      <div class="bet-block">
+      <div *ngIf="!isAdmin" class="bet-block">
         <div *ngIf="!isOwner" class="flex bet">
           <input id="input-bet" type="number" [(ngModel)]="bet" min="{{auction.betValue + 1}}" placeholder="Your bet">
         </div>
         <div *ngIf="!isOwner && isEnabledAuction()" class="flex btn-ok">
           <button (click)="onBet()" id="btn-ok">OK</button>
         </div>
-        <div *ngIf="isOwner btn" class="flex btn" >
+        <div *ngIf="isOwner" class="flex btn" >
           <button type="submit" (click)="onClickEdit()">Edit</button>
         </div>
       </div>
