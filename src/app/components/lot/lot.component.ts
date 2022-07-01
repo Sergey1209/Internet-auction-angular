@@ -27,12 +27,14 @@ export class LotComponent implements OnInit {
   isOwner:  boolean = false;
   isAdmin:  boolean = false;
   deadline: string | null = null;
+  added: string | null = null;
 
   @Input()
     set setLot(lot: Lot){
       this.lot = lot; 
       const pipe = new DatePipe('en-US');
       this.deadline = pipe.transform(this.lot.deadline,'dd.MM.yyyy hh:mm:ss');
+      this.added = pipe.transform(this.lot.initialDate,'dd.MM.yyyy hh:mm:ss');
       const currentDate = new Date(Date.now());
       const deadline = new Date(this.lot.deadline)
       this.isValidAuction = currentDate < deadline;

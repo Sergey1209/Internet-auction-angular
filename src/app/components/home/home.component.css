@@ -3,23 +3,5 @@
   color: gray;
   text-align: center;
   font-size: x-large;
-}
-.autor-icon{
-  font-size: xx-small;
-}
-
-button{
-  height: 100%;
-}
-
-.button-block > div {
-  display: inline-flex;
-  float: left;
-  height: 30px;
-  margin: 5px;
-}
-
-.search{
-  margin-left: 10px;
-  padding-left: 5px;
+  height: auto;
 }

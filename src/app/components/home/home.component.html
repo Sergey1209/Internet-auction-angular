@@ -1,28 +1,11 @@
 <ng-container>
   <div class=body>
     <h3>Internet Auction</h3>
-    <div class="button-block">
-      <div>
-        <input *ngIf="userToken.isAdmin" type="button" value="Add category" (click)="addLotCategory()">
-      </div>
-      <div *ngIf="userToken.isAdmin && selectedLotCategoryid > 0">
-        <input type="button" value="Edit category" (click)="editLotCategory()">
-      </div>
-    </div>
     <div>
       <app-categories-lot-list (onSelectedCategory)="handleSelectedCategory($event)"></app-categories-lot-list>
     </div>
-    <div class="button-block">
-      <div>
-        <input type="button" value="Add Lot" (click)="addLot()">
-        <input type="text" class="search" placeholder="Search" [(ngModel)]="searchString" (keyup)="onKeyPressSearch($event)">
-      </div>
-    </div>
     <div>
-      <app-lot-list [setLotCategoryId]="selectedLotCategoryid" [setSearch]="searchStringEmit"></app-lot-list>
+      <app-lot-list [setLotCategoryId]="selectedLotCategoryid"></app-lot-list>
     </div>
-    <dir class="autor-icon">
-      <div>Автор иконок: <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div><div>Автор иконок: <a href="https://www.flaticon.com/ru/authors/becris" title="Becris">Becris</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div><div>Автор иконок: <a href="https://www.flaticon.com/ru/authors/photo3idea-studio" title="photo3idea_studio">photo3idea_studio</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div><div>Автор иконок: <a href="https://www.flaticon.com/ru/authors/bsd" title="bsd">bsd</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div><div>Автор иконок: <a href="https://www.flaticon.com/ru/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div>  
-    </dir>
   </div>
 </ng-container>

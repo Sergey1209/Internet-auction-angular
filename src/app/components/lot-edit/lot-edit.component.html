@@ -4,15 +4,15 @@
       <div class="flex">
         <div>
           <label>Name:</label>
-          <input type="text" name="namef" [(ngModel)]="this.lot.name" required="REQUIRED" minlength="2">        
+          <input type="text" class="checkValid" name="name" [(ngModel)]="this.lot.name" required="REQUIRED" minlength="2">        
         </div>
         <div>
           <label>Description:</label>
-          <textarea name="descriptionf" cols="30" rows="20" [(ngModel)]="this.lot.description"></textarea>
+          <textarea name="description" cols="30" rows="20" [(ngModel)]="this.lot.description"></textarea>
         </div>
         <div>
           <label>Deadline:</label>        
-          <input type="datetime-local" name="deadlinef" [ngModel]="this.lot.deadline | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="dateChanged($event)">
+          <input type="datetime-local" name="deadline" [ngModel]="this.lot.deadline | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="dateChanged($event)">
         </div>
         <div>
           <label>Category:</label>
@@ -20,7 +20,7 @@
         </div>
         <div>
           <label>Initia price:</label>
-          <input type="number" name="initialPricef" [(ngModel)]="this.lot.initialPrice">
+          <input type="number" name="initialPrice" [(ngModel)]="this.lot.initialPrice">
         </div>         
       </div>
       <div class="images">

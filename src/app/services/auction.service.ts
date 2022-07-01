@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AUCTION_API_URL } from '../app.injection-tokens';
 import { serviceNames } from '../Functions/backend';
-import { Auction } from '../models/Auction';
+import { Auction } from '../models/auction';
 import { Bet } from '../models/bet';
 
 @Injectable({

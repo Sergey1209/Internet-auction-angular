@@ -1,12 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { observable, Observable } from 'rxjs';
-import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { Observable } from 'rxjs';
 import { AUCTION_API_URL } from '../app.injection-tokens';
 import { serviceNames } from '../Functions/backend';
 import { Lot } from '../models/lot';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +22,9 @@ export class LotService {
     return this.httpClient.get<Lot[]>(url);
   }
 
-  getAllLots(): Observable<Lot[]>{
-    const url = `${this.urlLot}`;
+  getAllLots(minId:number): Observable<Lot[]>{
+    const offset = 12;
+    const url = `${this.urlLot}/${minId}-${minId === 0 ? offset : minId - offset}`;
     return this.httpClient.get<Lot[]>(url);
   }
   
@@ -49,9 +47,9 @@ export class LotService {
     formData.append('id', lot?.id.toString() );
     formData.append('name', lot?.name);
     formData.append('description', lot?.description);
-    formData.append('initialPrice', lot?.initialPrice.toString());
+    if (lot?.initialPrice) formData.append('initialPrice', lot?.initialPrice.toString());
     formData.append('categoryId', lot?.categoryId.toString());
-    formData.append('deadline', lot?.deadline.toString());
+    if (lot?.deadline) formData.append('deadline', new Date(lot?.deadline).toDateString());
     formData.append('ownerId', lot.id > 0 ? lot?.ownerId.toString() : '0');
     
     for(var i=0; i< files.length; i++){

@@ -24,8 +24,8 @@ export class AuthComponent implements OnInit {
     
       this.form = new FormGroup({
       'nickname': new FormControl('nickname', Validators.compose([Validators.required, Validators.minLength(2)])),
-      'email' : new FormControl('mail12@gmail.com',  Validators.compose([Validators.required, Validators.email])),
-      'pass' : new FormControl('pass2', [Validators.required, Validators.minLength(2)])
+      'email' : new FormControl('user1@auction.com',  Validators.compose([Validators.required, Validators.email])),
+      'pass' : new FormControl('1', [Validators.required, Validators.minLength(1)])
     });
   }
 
@@ -44,7 +44,7 @@ export class AuthComponent implements OnInit {
           return throwError(err);
         }))
         .pipe(tap(x => {
-          this.toMain();
+          this.toHome();
           this.hasError = false;
         }))
         .subscribe());
@@ -58,10 +58,10 @@ export class AuthComponent implements OnInit {
     const nickname = this.form.get('nickname')?.value;
 
     if (this.form.valid)
-      this.subscription.add(this.authService.register(login, pass, nickname).pipe(tap(x => this.toMain())).subscribe());
+      this.subscription.add(this.authService.register(login, pass, nickname).pipe(tap(x => this.toHome())).subscribe());
   }
 
-  toMain(){  
+  toHome(){  
     if (this.isLogin){
       this.subscription.unsubscribe();
       this.router.navigate(['']);

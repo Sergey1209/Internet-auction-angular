@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Auction } from 'src/app/models/Auction';
+import { Auction } from 'src/app/models/auction';
 import { UserToken } from 'src/app/models/user-token';
 import { AuctionService } from 'src/app/services/auction.service';
 

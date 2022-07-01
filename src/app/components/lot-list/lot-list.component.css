@@ -1,6 +1,4 @@
 .lot-list > div{
-  display: flex;
-  flex-wrap: wrap;
   border-top: 2px solid darkgray; 
   width: 100%;
   height: auto;
@@ -9,6 +7,21 @@
   margin: auto;
 }
 
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .lot-list button:hover{
   border: 1px solid red;
+}
+
+.button-block {
+  height: 30px;
+  margin: 5px;
+}
+
+.search{
+  margin-left: 10px;
+  padding-left: 5px;
 }

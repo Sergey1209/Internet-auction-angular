@@ -50,7 +50,6 @@ export class LotEditComponent implements OnInit {
     }
     else 
       return null;
-
   }
 
   ngOnDestroy(): void {
@@ -63,15 +62,15 @@ export class LotEditComponent implements OnInit {
   }
 
   save(){
-    if (!this.userToken.isAuthenticated){
-      this.ngOnDestroy();
-      this.router.navigate(['/login']);
-    }
-    else{
+    if (this.userToken.isAuthenticated){
       this.lotService
         .saveLot(this.lot, [this.file0, this.file1, this.file2] as File[])
         .pipe(tap(x => this.toMain()))
         .subscribe();
+    }
+    else{
+      this.ngOnDestroy();
+      this.router.navigate(['/login']);
     }
   }
 

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Lot } from 'src/app/models/lot';
 import { UserToken } from 'src/app/models/user-token';
 import { LotService } from 'src/app/services/lot.service';
@@ -13,34 +14,42 @@ export class LotsListComponent implements OnInit {
   lots: Lot[] | null = null;
   searchString: string = '';
   lotCategoryId:number = 0;
-  sliceLots: number = 20;
+  lotsAmount: number = 20;
+  minId: number = 0;
 
   @Input()
     set setLotCategoryId(id: number){  
       this.lotCategoryId = id; 
       this.filterLots();
     }
+
+  loadLots(){
+    this.lotService.getAllLots(this.minId).subscribe(data => {
+      this.baseLots.push(...data);
+      this.baseLots = this.baseLots.sort((a,b) => b.id - a.id);
+      this.filterLots();
+      const arr = this.baseLots?.map(x => x.id);
+      this.minId = Math.min(...arr);
+    });
+  }
  
   @Input()
     set setSearch(val: string){
       this.searchString = val.trim();
-      this.filterLots();
     }
 
   constructor(
     private lotService: LotService, 
-    public userToken: UserToken) { 
+    public userToken: UserToken,
+    private router: Router) { 
   }
 
   ngOnInit(): void { 
-    this.lotService.getAllLots().subscribe(data => {
-      this.baseLots = data.sort((a,b) => <any>new Date(b.initialDate) - <any>new Date(a.initialDate));
-      this.filterLots();
-    });
+    this.loadLots();
   }
 
   filterLots(){
-    this.lots = this.baseLots.slice(0, this.sliceLots);
+    this.lots = this.baseLots;//.slice(0, this.sliceLots);
     this.filterByCategory();
     this.filterBySearchString();
   }
@@ -53,12 +62,22 @@ export class LotsListComponent implements OnInit {
 
   filterBySearchString(){
     if (this.searchString){
-      this.lots = this.baseLots?.filter(x => x.name.includes(this.searchString.trim())); 
+      this.lots = this.baseLots?.filter(x => x.name.includes(this.searchString)); 
     }
   }
 
   getMaxLotId() {
     this.baseLots[0]
+  }
+
+  onKeyPressSearch(event: KeyboardEvent){
+    // if (event.key === 'Enter') {
+      this.filterLots();
+    // }
+  }
+
+  addLot(){
+    this.router.navigate(['/lot/add']);
   }
 
 }

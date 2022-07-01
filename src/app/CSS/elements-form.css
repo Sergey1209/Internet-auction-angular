@@ -40,6 +40,13 @@ textarea:hover
   border: 1px solid brown;
 }
 
+.items
+input:invalid,
+textarea:invalid{
+  border-color: red;
+  background-color: rgb(247, 224, 224);
+}
+
 .form{
   padding: 20px;
   margin-top: 100px;
@@ -80,3 +87,4 @@ button{
   background-color: darkgrey;
   cursor: pointer;
 }
+

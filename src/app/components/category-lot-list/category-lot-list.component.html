@@ -1,5 +1,14 @@
-<div class="category-list">
-  <div *ngIf="lotCategories" class="category-list">
-    <app-category-lot *ngFor="let category of lotCategories" [lotCategory]="category" (onSelectedCategory)="handleSelectedCategory($event)"></app-category-lot>
+
+  <div class="button-block flex">
+    <div class="button flex">
+      <input *ngIf="userToken.isAdmin" type="button" value="Add category" (click)="addLotCategory()">
+    </div>
+    <div class="button flex" *ngIf="userToken.isAdmin && selectedLotCategoryid > 0">
+      <input class="button" type="button" value="Edit category" (click)="editLotCategory()">
+    </div>
   </div>
-</div>
+  <div class="category-list">
+    <div *ngIf="lotCategories" class="category-list flex">
+      <app-category-lot *ngFor="let category of lotCategories" [lotCategory]="category" (onSelectedCategory)="handleSelectedCategory($event)"></app-category-lot>
+    </div>
+  </div>

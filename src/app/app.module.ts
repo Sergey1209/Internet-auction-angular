@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Input, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,8 +22,8 @@ import { SelectImageComponent } from './components/select-image/select-image.com
 import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 import { AuthGuard } from './guards/auth-guard';
 import { AuctionComponent } from './components/auction/auction.component';
-import { UserToken } from './models/user-token';
 import { AdminGuardGuard as AdminGuard } from './guards/admin-guard.guard';
+import { InfiniteScrollComponent } from './components/infinite-scroll/infinite-scroll.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -44,6 +44,7 @@ export function tokenGetter(){
     SelectImageComponent,
     ComboBoxComponent,
     AuctionComponent,
+    InfiniteScrollComponent,
   ],
   imports: [
     BrowserModule,

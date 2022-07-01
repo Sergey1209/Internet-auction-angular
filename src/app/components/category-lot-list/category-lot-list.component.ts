@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoryLot } from 'src/app/models/category-lot';
+import { UserToken } from 'src/app/models/user-token';
 import { CategoryLotService } from 'src/app/services/category-lot.service';
 
 @Component({
@@ -13,7 +15,13 @@ export class LotCategoriesListComponent implements OnInit {
   @Output()
     onSelectedCategory = new EventEmitter<number>();
 
-  constructor(private lotCategoryService: CategoryLotService) { }
+  selectedLotCategoryid = 0;
+  
+  constructor(
+    private lotCategoryService: CategoryLotService,
+    public userToken: UserToken,
+    private router: Router) { 
+    }
 
   ngOnInit(): void {
     this.lotCategoryService.getLotCategories().subscribe(categ => {
@@ -22,7 +30,14 @@ export class LotCategoriesListComponent implements OnInit {
   }
 
   handleSelectedCategory(id: number){
+    this.selectedLotCategoryid = id;
     this.onSelectedCategory.emit(id);
   }
 
+  addLotCategory(){
+    this.router.navigate(['/lotcategory/add']);
+  }
+  editLotCategory(){
+    this.router.navigate([`/lotcategory/${this.selectedLotCategoryid}`]);
+  }
 }
