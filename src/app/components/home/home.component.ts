@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component,  OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserToken } from 'src/app/models/user-token';
@@ -11,9 +12,11 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private route: Router,
-    public userToken: UserToken) {  }
+    public userToken: UserToken) {
+      this.selectedLotCategoryid = 0;
+    }
   
-  selectedLotCategoryid: Number = 0;
+  selectedLotCategoryid;
   searchString: string = '';
   searchStringEmit: string = '';
 

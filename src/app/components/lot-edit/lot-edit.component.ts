@@ -12,7 +12,7 @@ import { LotService } from 'src/app/services/lot.service';
 })
 export class LotEditComponent implements OnInit {
   private subscription = new Subscription();
-  lot: Lot = new Lot(0, '', '', 0, [], new Date(Date.now()), 0, '', 0, 0, 0);
+  lot: Lot = new Lot(0, '', '', 0, [], new Date(Date.now()), 0, '', 0, 0, 0, new Date(Date.now()));
 
   file0: File | null | undefined | string = null;
   file1: File | null | undefined | string = null;

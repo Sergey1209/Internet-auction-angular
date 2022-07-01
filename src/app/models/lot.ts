@@ -10,6 +10,7 @@ export class Lot{
   ownerName: string;
   auctionId: number;
   betValue: number;
+  initialDate: Date;
   
   constructor(id: number, 
               name: string, 
@@ -21,7 +22,8 @@ export class Lot{
               ownerName: string,
               categoryId: number,
               auctionId:number,
-              betValue: number
+              betValue: number,
+              initialDate: Date
               ) {
     this.id = id;
     this.name = name;
@@ -34,5 +36,6 @@ export class Lot{
     this.categoryId = categoryId;
     this.auctionId = auctionId;
     this.betValue = betValue;
+    this.initialDate = initialDate;
   }
 }

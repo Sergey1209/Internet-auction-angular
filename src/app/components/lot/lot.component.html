@@ -10,6 +10,7 @@
         <button class="margin-right">{{lot.betValue}} $</button>    
         <a href="./auction/{{this.lot.auctionId}}">Make a bet</a>
         <p>
+          Added: {{lot.initialDate}}
           <a *ngIf="isOwner" href="./lot/{{this.lot.id }}">Edit</a>
           <a *ngIf="isOwner || isAdmin" href="" (click)="onDelete()">Delete</a>
           <a *ngIf="!isOwner && !isAdmin"></a>

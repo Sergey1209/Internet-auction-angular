@@ -25,6 +25,11 @@ export class LotService {
     return this.httpClient.get<Lot[]>(url);
   }
 
+  getAllLots(): Observable<Lot[]>{
+    const url = `${this.urlLot}`;
+    return this.httpClient.get<Lot[]>(url);
+  }
+  
   getLotById(lotId: string): Observable<Lot>{
     const url = `${this.urlLot}/${lotId}`;
     return this.httpClient.get<Lot>(url);
