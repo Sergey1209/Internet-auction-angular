@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Category } from 'src/app/models/category-lot';
+import { Category } from 'src/app/models/category';
 import { Lot } from 'src/app/models/lot';
 import { UserToken } from 'src/app/models/user-token';
 import { LotService } from 'src/app/services/lot.service';
+import { ProxyService } from 'src/app/services/proxy.service';
 
 enum TypeLots{
   byCategory,
@@ -15,11 +16,12 @@ enum TypeLots{
   styleUrls: ['./lot-list.component.css']
 })
 export class LotsListComponent {
-  activeCategory: Category | null = null;
-  baseLots: Lot[] | null = null;
+  currentCategory: Category | null = null;
   lots: Lot[] | null = null;
   searchString: string = '';
+  oldSearchString: string = '';
   typeLots : TypeLots | null = null;
+  searchCategory: Category;
 
   @Input()
   set setSearch(val: string){
@@ -27,43 +29,68 @@ export class LotsListComponent {
   }
 
   @Input()
-  set setActiveCategory(activeCategory: Category | null){ 
-    if (this.activeCategory){
-      this.activeCategory.togleSelect ();
+    set setCategory(activeCategory: Category | null){ 
+      this.loadLotsBySelectedCategory(activeCategory);
     }
-
-    this.typeLots = TypeLots.byCategory;
-    this.activeCategory = activeCategory; 
-    this.baseLots = null;
-    this.filterLots();
-
-    if (activeCategory){
-      if (!activeCategory.lots) {
-        this.loadLots();
-      }
-      else{
-        this.baseLots = activeCategory.lots;
-        this.filterLots();
-      }
-    }
-    // activeCategory?.togleSelect ();
-  }
 
   constructor(
     public userToken: UserToken,
     private router: Router,
-    private lotService: LotService) { 
+    private lotService: LotService,
+    public proxyService: ProxyService) { 
+      this.proxyService.onSelectCategory.subscribe(x => this.setCategory = x);
+      this.searchCategory = new Category(-1,'Search','');
+  }
+
+  unselectCurrentCategory(){
+    if (this.currentCategory){
+      this.currentCategory.isSelected = false;
+    }
+  }
+  
+  private setCurrentCategory(category: Category | null){
+    this.currentCategory = category;
+    if (this.currentCategory){
+      this.lots = this.currentCategory.lots;
+      this.currentCategory.isSelected = true;
+    }
+    else{
+      this.lots = null;
+    }
+  }
+
+  loadLotsBySelectedCategory(activeCategory: Category | null){
+    if (this.currentCategory === activeCategory){
+      this.unselectCurrentCategory();
+      return;
+    }
+    else{
+      this.unselectCurrentCategory();
+    }
+
+    this.typeLots = TypeLots.byCategory;
+    this.setCurrentCategory(activeCategory);
+
+    if (this.currentCategory && !this.currentCategory.lots){
+      this.loadLots();
+    }
   }
 
   loadLotsBySearchstring() {
-    if (this.activeCategory){
-      this.activeCategory.isSelected = false;
+    if (this.oldSearchString === this.searchString){
+      if (this.currentCategory !== this.searchCategory){
+        this.unselectCurrentCategory();
+        this.setCurrentCategory(this.searchCategory);
+      }
+      return;
     }
 
+    if (this.searchCategory){
+      this.searchCategory.lots = null;
+    }
+    this.unselectCurrentCategory();
+    this.setCurrentCategory(this.searchCategory);
     this.typeLots = TypeLots.bySearch
-    this.activeCategory = new Category(0, 'search', '');
-    this.baseLots = null;
-    this.filterLots();
     this.loadLots();
   }
 
@@ -82,55 +109,59 @@ export class LotsListComponent {
 
   private getFuncLotsByCategory(){
     const minId = this.getMinId();
-    return this.activeCategory ? this.lotService.getlotsByCategory(this.activeCategory.id, minId) : null;
+    return this.currentCategory ? this.lotService.getlotsByCategory(this.currentCategory.id, minId) : null;
   }
 
   private getFuncLotsBySearch(){
     const minId = this.getMinId();
-    return this.activeCategory ? this.lotService.getlotsBySearch(this.searchString, minId) : null;
+    return this.currentCategory ? this.lotService.getlotsBySearch(this.searchString, minId) : null;
   }
 
   private getMinId(){
-    const arr = this.baseLots?.map(x => x.id);
+    const arr = this.lots?.map(x => x.id);
     const minId = arr?.length! > 0 ? Math.min(...arr!) : 0;
     return minId;
   }
 
-  loadLots() {
-    let func: any;
+  private getCurrentFuncLots() : any{
     if (this.typeLots === TypeLots.byCategory){
-      func = this.getFuncLotsByCategory();
+      return this.getFuncLotsByCategory();
     }
     else if(this.typeLots === TypeLots.bySearch){
-      func = this.getFuncLotsBySearch();
+      return this.getFuncLotsBySearch();
     }
-
-    func.subscribe((data: Lot[] | null) => {
-      if (data){
-        if (this.activeCategory?.lots?.find(x => x.id < this.getMinId())){
-          return;
-        }
-        if (this.activeCategory?.lots){
-          this.activeCategory.lots.push(...data);
-        }
-        else {
-          if (this.activeCategory){
-            this.activeCategory.lots = data;
-            this.baseLots = this.activeCategory?.lots;
-          }
-        }
-        this.filterLots();
-      }
-    });
+    else{
+      return null;
+    }
   }
 
-  filterLots(){
-    this.lots = this.baseLots;
+  loadLots() {
+    let func: any = this.getCurrentFuncLots();
+    if (func){
+      func.subscribe((data: Lot[] | null) => {
+        if (data){
+          if (this.currentCategory?.lots?.find(x => x.id < this.getMinId())){
+            return;
+          }
+
+          if (this.currentCategory?.lots){
+            this.currentCategory.lots.push(...data);
+          }
+          else {
+            if (this.currentCategory){
+              this.currentCategory.lots = data;
+              this.lots = this.currentCategory?.lots;
+            }
+          }
+        }
+      });
+    }
   }
 
   onKeyPressSearch(event: KeyboardEvent){
     if (event.key === 'Enter') {
       this.loadLotsBySearchstring();
+      this.oldSearchString = this.searchString;
     }
   }
 

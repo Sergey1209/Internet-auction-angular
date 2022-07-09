@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators,  } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscriber, Subscription, pipe, tap, catchError, throwError } from 'rxjs';
+import { Subscription, tap, catchError, throwError } from 'rxjs';
 import { UserToken } from 'src/app/models/user-token';
 import { AuthService } from '../../services/auth.service';
 

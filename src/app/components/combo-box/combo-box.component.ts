@@ -1,8 +1,8 @@
 // taken from https://medium.com/@coolsharang/angular-combo-box-840c893a253c
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CategoryLotService } from 'src/app/services/category-lot.service';
-import { Category } from 'src/app/models/category-lot';
+import { CategoryService } from 'src/app/services/category.service';
+import { Category } from 'src/app/models/category';
 
 @Component({
   selector: 'app-combo-box',
@@ -16,7 +16,7 @@ export class ComboBoxComponent implements OnInit {
   listHidden = true;
   selectedIndex = -1;
 
-  constructor(private categoryService: CategoryLotService) { }
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.categoryService.getCategories().subscribe(listCateg => {

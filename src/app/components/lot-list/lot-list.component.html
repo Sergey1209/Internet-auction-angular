@@ -10,7 +10,7 @@
   (wheel)="handleMousewheel()"
   [scrollWindow]="false"
   >
-    <div *ngIf="lots && activeCategory?.isSelected" class="flex">
+    <div *ngIf="lots && currentCategory?.isSelected" class="flex">
       <app-lot *ngFor="let lot of lots" [setLot]="lot" ></app-lot>
     </div>
   </div>

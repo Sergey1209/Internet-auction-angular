@@ -5,9 +5,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { LotCategoriesListComponent } from './components/category-lot-list/category-lot-list.component';
-import { CategoryLotsComponent } from './components/category-lot/category-lot.component';
-import { EditLotCategoryComponent as LotCategoryEditComponent } from './components/category-lot-edit/category-lot-edit.component';
+import { CategoriesListComponent } from './components/category-list/category-list.component';
+import { CategoryComponent } from './components/category/category.component';
+import { CategoryEditComponent as LotCategoryEditComponent } from './components/category-edit/category-edit.component';
 import { HomeComponent } from './components/home/home.component';
 import { TopLineComponent } from './components/top-line/top-line.component';
 import { AuthComponent } from './components/auth/auth.component';
@@ -24,6 +24,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { AuctionComponent } from './components/auction/auction.component';
 import { AdminGuard } from './guards/admin-guard.guard';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { ProxyService } from './services/proxy.service';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -32,8 +33,8 @@ export function tokenGetter(){
 @NgModule({
   declarations: [
     AppComponent,
-    LotCategoriesListComponent,
-    CategoryLotsComponent,
+    CategoriesListComponent,
+    CategoryComponent,
     LotCategoryEditComponent,
     HomeComponent,
     TopLineComponent,
@@ -45,6 +46,7 @@ export function tokenGetter(){
     ComboBoxComponent,
     AuctionComponent,
   ],
+
   imports: [
     BrowserModule,
     InfiniteScrollModule,
@@ -70,12 +72,15 @@ export function tokenGetter(){
   ],
   providers: [{
     provide: AUCTION_API_URL,
-    useValue: environment.auctionApi
-  },
-  {
+    useValue: environment.auctionApi,
+    
+    },
+    {
     provide: AUTH_API_URL,
     useValue: environment.authApi
-  }],
+    },
+    ProxyService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

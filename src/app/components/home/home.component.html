@@ -2,10 +2,10 @@
   <div class=body>
     <h3>Internet Auction</h3>
     <div>
-      <app-categories-lot-list (onSelectedCategory)="handleSelectedCategory($event)" ></app-categories-lot-list>
+      <app-categories-list></app-categories-list>
     </div>
     <div>
-      <app-lot-list [setActiveCategory]="selectedCategory"></app-lot-list>
+      <app-lot-list></app-lot-list>
     </div>
   </div>
 </ng-container>
