@@ -1,0 +1,14 @@
+<div class="button-block flex">
+  <div class="button flex">
+    <input *ngIf="userToken.isAdmin" type="button" value="Add category" (click)="addCategory()">
+  </div>
+  <div class="button flex" *ngIf="userToken.isAdmin && selectedCategoryid > 0">
+    <input class="button" type="button" value="Edit category" (click)="editCategory()">
+  </div>
+</div>
+<div class="category-list">
+  <div *ngIf="categories" class="category-list flex">
+    <app-category *ngFor="let category of categories" [setCategory]="category">
+    </app-category>
+  </div>
+</div>

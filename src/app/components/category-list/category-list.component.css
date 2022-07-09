@@ -1,0 +1,29 @@
+.button-block {
+  height: 30px;
+  margin: 5px;
+}
+
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.button{
+  height: 100%;
+  margin-right: 20px;
+}
+
+.category button:hover{
+  border: 1px solid red;
+}
+
+.category-list > div{
+  width: 100%;
+  height: auto;
+  max-height: 200px; 
+  min-height: 75px;
+  margin: auto;
+  border-top: 2px solid darkgray; 
+}
+
+

@@ -1,0 +1,16 @@
+<div class="container">
+  <form class="items">
+    <div class="form flex">
+      <app-select-image accept=".png" [url]=this.lotCategory.urlIcon (onChangedUrl)="this.file = $event"></app-select-image>
+      <div class="name">
+        <label>Name:</label>
+        <input type="text" name="name" [(ngModel)]="this.lotCategory.name" required="REQUIRED" minlength="2">
+      </div>
+      <div class="flex">
+        <div class="submit">
+          <button type="submit" (click)="save()">OK</button> 
+        </div> 
+      </div>
+    </div>    
+  </form>
+</div>
