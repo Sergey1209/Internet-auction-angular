@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AUCTION_API_URL } from '../app.injection-tokens';
 import { serviceNames } from '../Functions/backend';
-import { CategoryLot } from '../models/category-lot';
+import { Category } from '../models/category-lot';
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +16,17 @@ export class CategoryLotService {
     @Inject(AUCTION_API_URL) private apiUrl: string
     ) {  }
   
-  getLotCategories() : Observable<CategoryLot[]>{
+  getCategories() : Observable<Category[]>{
     const url = `${this.baseApiUrl}/${serviceNames.lotCategory}`;
-    return this.httpClient.get<CategoryLot[]>(url);
+    return this.httpClient.get<Category[]>(url);
   }
 
-  getLotCategoryById(id: string) : Observable<CategoryLot> {
+  getLotCategoryById(id: string) : Observable<Category> {
     const url = `${this.baseApiUrl}/${serviceNames.lotCategory}/${id}`;
-    return this.httpClient.get<CategoryLot>(url);
+    return this.httpClient.get<Category>(url);
   }
 
-  editLotCategory(lotCategory: CategoryLot, files: File[]) : Observable<any>{
+  editLotCategory(lotCategory: Category, files: File[]) : Observable<any>{
     const url = `${this.baseApiUrl}/${serviceNames.lotCategory}`;
     const formData: FormData = new FormData();
 

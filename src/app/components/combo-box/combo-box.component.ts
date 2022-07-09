@@ -2,7 +2,7 @@
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CategoryLotService } from 'src/app/services/category-lot.service';
-import { CategoryLot } from 'src/app/models/category-lot';
+import { Category } from 'src/app/models/category-lot';
 
 @Component({
   selector: 'app-combo-box',
@@ -10,8 +10,8 @@ import { CategoryLot } from 'src/app/models/category-lot';
   styleUrls: ['./combo-box.component.css']
 })
 export class ComboBoxComponent implements OnInit {
-  list: CategoryLot[] = [];
-  filteredList: CategoryLot[] = [];
+  list: Category[] = [];
+  filteredList: Category[] = [];
   inputItem: string = '';
   listHidden = true;
   selectedIndex = -1;
@@ -19,7 +19,7 @@ export class ComboBoxComponent implements OnInit {
   constructor(private categoryService: CategoryLotService) { }
 
   ngOnInit() {
-    this.categoryService.getLotCategories().subscribe(listCateg => {
+    this.categoryService.getCategories().subscribe(listCateg => {
       this.list = listCateg;
       this.filteredList = this.list;
       const index =  this.filteredList.findIndex(x => x.id === this.categoryId);

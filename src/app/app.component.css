@@ -10,6 +10,7 @@
 }
 
 .autor-icon {
+  display: block;
   font-size: xx-small;
   margin-top: 20px;
   text-align: center;

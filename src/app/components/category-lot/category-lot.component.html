@@ -1,7 +1,7 @@
-  <div class="container">
-    <div class="component" (click)="loadLotsOfCategory()">
-      <img src={{lotCategory.urlIcon}} alt="">
+  <div class="container" [ngClass]="{'border-yellow' : category?.isSelected, 'border-transparent': !category?.isSelected}">
+    <div class="component" (click)="handleSelectedCategory()">
+      <img src={{category?.urlIcon}} alt="">
       <p></p>
-      {{lotCategory.name}}
+      {{category?.name}}
     </div>
   </div>

@@ -1,5 +1,9 @@
 {
   // "html.format.contentUnformatted": ""
   "emmet.triggerExpansionOnTab": true,
-  "files.associations": {"*html": "html"}
+  "files.associations": {
+    "*html": "html"
+  },
+  "editor.fontSize": 14,
+  "editor.minimap.enabled": false
 }

@@ -1,7 +1,13 @@
-export class CategoryLot {
+import { Injectable, Input } from "@angular/core";
+import { NgModel } from "@angular/forms";
+import { Lot } from "./lot";
+
+export class Category {
   id: number;
   name: string;
   urlIcon: string;
+  lots: Lot[] | null = null;
+  isSelected: boolean = false;
 
   constructor(id: number, name: string, iconPath: string) {
     this.id = id;
@@ -9,7 +15,12 @@ export class CategoryLot {
     this.urlIcon = iconPath;
   }
 
-  toString(){
+  toString() {
     return this.name;
   }
+
+  togleSelect() {
+    this.isSelected = !this.isSelected;
+  }
+
 }

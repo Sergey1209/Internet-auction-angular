@@ -2,6 +2,7 @@
   width: auto;
   border: 1px solid;
   height: 15px;
+  min-width: 50px;
   font-size: small;
   background-color: transparent;
   padding: 5px;
@@ -28,4 +29,12 @@ image{
 
 p{
   margin-right: 5px;
+}
+
+.border-yellow{
+  border: 1px solid goldenrod;
+}
+
+.border-transparent{
+  border: 0px solid transparent;
 }

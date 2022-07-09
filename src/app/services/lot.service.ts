@@ -17,8 +17,8 @@ export class LotService {
     @Inject(AUCTION_API_URL) private apiUrl: string
     ) { }
 
-  getlotsByCategory(categoryId: Number): Observable<Lot[]>{
-    const url = `${this.urlLotByCategory}/${categoryId}`;
+  getlotsByCategory(categoryId: number, lotId: number): Observable<Lot[]>{
+    const url = `${this.urlLotByCategory}/${categoryId}/${lotId}`;
     return this.httpClient.get<Lot[]>(url);
   }
 
@@ -33,10 +33,9 @@ export class LotService {
     return this.httpClient.get<Lot>(url);
   }
 
-  getlotsBySearch(searchString: string): Observable<Lot[]>{
+  getlotsBySearch(searchString: string, lotId: number = 0): Observable<Lot[]>{
     const url = `${this.urlLot}/search`;
-    let headers = new HttpHeaders();
-    headers.append('searchString', searchString);
+    const headers = new HttpHeaders().set('searchString', searchString).set('lotId', lotId.toString());
     return this.httpClient.get<Lot[]>(url, {headers: headers});
   }
 

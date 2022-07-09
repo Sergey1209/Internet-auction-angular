@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
+import { Category } from 'src/app/models/category-lot';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -6,12 +7,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class HomeComponent {
 
-  selectedLotCategoryid = 0;
+  selectedCategory: Category | null = null;
 
   constructor( ) { }
 
-  handleSelectedCategory(categoryid: number){
-    this.selectedLotCategoryid = categoryid;
+  handleSelectedCategory(selectedCategory: Category | null ){
+    this.selectedCategory = selectedCategory;   
   }
-
 }

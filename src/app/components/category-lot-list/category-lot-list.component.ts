@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryLot } from 'src/app/models/category-lot';
+import { Category } from 'src/app/models/category-lot';
 import { UserToken } from 'src/app/models/user-token';
-import { CategoryLotService } from 'src/app/services/category-lot.service';
+import { CategoryLotService as CategoryService } from 'src/app/services/category-lot.service';
 
 @Component({
   selector: 'app-categories-lot-list',
@@ -10,34 +10,51 @@ import { CategoryLotService } from 'src/app/services/category-lot.service';
   styleUrls: ['./category-lot-list.component.css']
 })
 export class LotCategoriesListComponent implements OnInit {
-  lotCategories: CategoryLot[] = [];
+  
+  categoryAll: Category = new Category(0, 'All', '')
 
   @Output()
-    onSelectedCategory = new EventEmitter<number>();
+    onSelectedCategory = new EventEmitter<Category | null>();
 
-  selectedLotCategoryid = 0;
+  @Output()
+    categories: Category[] = [];
+  
+  selectedCategoryid = 0;
   
   constructor(
-    private lotCategoryService: CategoryLotService,
+    private categoryService: CategoryService,
     public userToken: UserToken,
-    private router: Router) { 
-    }
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
-    this.lotCategoryService.getLotCategories().subscribe(categ => {
-      this.lotCategories = categ;
+    this.categoryService.getCategories().subscribe(categ => {
+      this.categories = categ;
+      this.categories.push(this.categoryAll);
+      this.categories.sort((a,b) => a.id - b.id);
     }); 
   }
 
-  handleSelectedCategory(id: number){
-    this.selectedLotCategoryid = id;
-    this.onSelectedCategory.emit(id);
+  handleSelectedCategory(category: Category | null){
+    category?.togleSelect();
+    this.selectedCategoryid = category ? category.id : 0;
+    this.onSelectedCategory.emit(category);
+
+    // if (!category?.isSelected){
+    //   this.selectedCategoryid = category ? category.id : 0;
+    //   this.onSelectedCategory.emit(category);
+    // }
+    // else{
+    //   category.togleSelect();
+    //   // this.selectedCategoryid = 0;
+    //   // this.onSelectedCategory.emit(this.categoryAll);
+    // }
   }
 
-  addLotCategory(){
+  addCategory(){
     this.router.navigate(['/lotcategory/add']);
   }
-  editLotCategory(){
-    this.router.navigate([`/lotcategory/${this.selectedLotCategoryid}`]);
+  editCategory(){
+    this.router.navigate([`/lotcategory/${this.selectedCategoryid}`]);
   }
 }

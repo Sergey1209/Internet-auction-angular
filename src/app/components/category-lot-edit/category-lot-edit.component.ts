@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
-import { CategoryLot } from 'src/app/models/category-lot';
+import { Category } from 'src/app/models/category-lot';
 import { CategoryLotService } from 'src/app/services/category-lot.service';
 
 @Component({
@@ -13,14 +13,14 @@ export class EditLotCategoryComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   
   file: File | null | undefined = null;
-  lotCategory : CategoryLot;
+  lotCategory : Category;
 
   constructor(
     private lotCategoryService: CategoryLotService, 
     private router: Router,
     private activeRoute: ActivatedRoute
     ) { 
-      this.lotCategory = new CategoryLot(0,'','');
+      this.lotCategory = new Category(0,'','');
      }
     
   ngOnDestroy(): void {
@@ -31,7 +31,7 @@ export class EditLotCategoryComponent implements OnInit, OnDestroy {
     this.file = (event.target as HTMLInputElement).files?.item(0);
     let reader = new FileReader();
     reader.onload = (event: any) => {
-      this.lotCategory = new CategoryLot(this.lotCategory.id, this.lotCategory.name, event.target.result);
+      this.lotCategory = new Category(this.lotCategory.id, this.lotCategory.name, event.target.result);
     }
 
     reader.readAsDataURL(this.file as Blob);

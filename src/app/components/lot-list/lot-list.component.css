@@ -1,19 +1,6 @@
-.lot-list > div{
-  border-top: 2px solid darkgray; 
-  width: 100%;
-  height: auto;
-  max-height: 1200px; 
-  min-height: 600px;
-  margin: auto;
-}
-
 .flex{
   display: flex;
   flex-wrap: wrap;
-}
-
-.lot-list button:hover{
-  border: 1px solid red;
 }
 
 .button-block {
@@ -24,4 +11,10 @@
 .search{
   margin-left: 10px;
   padding-left: 5px;
+}
+
+.lot-list-scroll {
+  display: block;
+  height: 56rem;
+  overflow-y: scroll
 }

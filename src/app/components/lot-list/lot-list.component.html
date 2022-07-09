@@ -1,15 +1,17 @@
-
 <div>
-  <ms-infinite-scroll (scrolled)="loadLots()" >
-    <div class="button-block flex">
-      <input type="button" value="Add Lot" (click)="addLot()">
-      <input type="text" class="search" placeholder="Search" [(ngModel)]="setSearch" (keyup)="onKeyPressSearch($event)">
+  <div class="button-block flex">
+    <input type="button" value="Add Lot" (click)="addLot()">
+    <input type="text" class="search" placeholder="Search" [(ngModel)]="setSearch" (keyup)="onKeyPressSearch($event)">
+  </div>
+  <div class="lot-list-scroll" id="lot-list-scroll" 
+  infiniteScroll
+  [infiniteScrollDistance]="0.5"
+  (scrolled)="handleInfinityScrollLots()"
+  (wheel)="handleMousewheel()"
+  [scrollWindow]="false"
+  >
+    <div *ngIf="lots && activeCategory?.isSelected" class="flex">
+      <app-lot *ngFor="let lot of lots" [setLot]="lot" ></app-lot>
     </div>
-    <div *ngIf="lots" class="flex">
-      <div class="lot-list">
-        <app-lot *ngFor="let lot of lots" [setLot]="lot"></app-lot>
-      </div>
-    </div>
-  </ms-infinite-scroll>
+  </div>
 </div>
-

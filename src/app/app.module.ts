@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LotCategoriesListComponent } from './components/category-lot-list/category-lot-list.component';
-import { LotCategoryComponent } from './components/category-lot/category-lot.component';
+import { CategoryLotsComponent } from './components/category-lot/category-lot.component';
 import { EditLotCategoryComponent as LotCategoryEditComponent } from './components/category-lot-edit/category-lot-edit.component';
 import { HomeComponent } from './components/home/home.component';
 import { TopLineComponent } from './components/top-line/top-line.component';
@@ -22,8 +22,8 @@ import { SelectImageComponent } from './components/select-image/select-image.com
 import { ComboBoxComponent } from './components/combo-box/combo-box.component';
 import { AuthGuard } from './guards/auth-guard';
 import { AuctionComponent } from './components/auction/auction.component';
-import { AdminGuardGuard as AdminGuard } from './guards/admin-guard.guard';
-import { InfiniteScrollComponent } from './components/infinite-scroll/infinite-scroll.component';
+import { AdminGuard } from './guards/admin-guard.guard';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -33,7 +33,7 @@ export function tokenGetter(){
   declarations: [
     AppComponent,
     LotCategoriesListComponent,
-    LotCategoryComponent,
+    CategoryLotsComponent,
     LotCategoryEditComponent,
     HomeComponent,
     TopLineComponent,
@@ -44,10 +44,10 @@ export function tokenGetter(){
     SelectImageComponent,
     ComboBoxComponent,
     AuctionComponent,
-    InfiniteScrollComponent,
   ],
   imports: [
     BrowserModule,
+    InfiniteScrollModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,

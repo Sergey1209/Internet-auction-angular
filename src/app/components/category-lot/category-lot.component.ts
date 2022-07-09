@@ -1,24 +1,27 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CategoryLot } from 'src/app/models/category-lot';
-
+import { Component, EventEmitter, Input,  Output } from '@angular/core';
+import { Category } from 'src/app/models/category-lot';
 @Component({
   selector: 'app-category-lot',
   templateUrl: './category-lot.component.html',
   styleUrls: ['./category-lot.component.css']
 })
-export class LotCategoryComponent implements OnInit { 
+export class CategoryLotsComponent { 
+  category: Category | null = null;
+  
   @Input()
-    lotCategory: CategoryLot = new CategoryLot(0, '', '');
-
+    set setCategory(category: Category){
+      this.category = new Category(category.id, category.name, category.urlIcon);
+    }
+    
   @Output()
-    onSelectedCategory = new EventEmitter<number>();
+    onSelectedCategory = new EventEmitter<Category | null>();
 
-  constructor() {
-   }
+  constructor() {  }
 
-  ngOnInit(): void { }
-
-  loadLotsOfCategory(){
-    this.onSelectedCategory.emit(this.lotCategory?.id);
+  handleSelectedCategory(){
+    if (this.category){
+      this.onSelectedCategory.emit(this.category);
+    }
   }
+
 }
