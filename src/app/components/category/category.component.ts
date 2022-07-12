@@ -11,19 +11,10 @@ export class CategoryComponent {
   
   @Input()
   set setCategory(category: Category){
-    this.category = new Category(category.id, category.name, category.urlIcon);
-    
-    this.category.visible = category.visible === undefined ? true : category.visible;
-    this.category.isSelected = category.isSelected === undefined ? false : category.isSelected;
-
-    if(category.id === 0){
-      this.proxyService.onSelectCategory.emit(this.category);
-    }
+    this.category = category;
   }
 
-  constructor(
-    private proxyService: ProxyService
-    ) { }
+  constructor(private proxyService: ProxyService ) { }
 
   handleSelectedCategory(){
     if (this.category){

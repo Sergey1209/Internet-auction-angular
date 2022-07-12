@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AUCTION_API_URL } from '../app.injection-tokens';
-import { serviceNames } from '../Functions/backend';
-import { Auction } from '../models/auction';
+import { serviceNames } from '../functions/backend';
+import { auction } from '../models/auction';
 import { Bet } from '../models/bet';
 
 @Injectable({
@@ -15,9 +15,9 @@ export class AuctionService {
   constructor(private httpClient: HttpClient,
     @Inject(AUCTION_API_URL) private apiUrl: string ) { }
     
-  getAuctionById(id: number) : Observable<Auction> {
+  getAuctionById(id: number) : Observable<auction> {
     const url = `${this.baseApiUrl}/${id}`;
-    return this.httpClient.get<Auction>(url);
+    return this.httpClient.get<auction>(url);
   }
 
   setBet(id: number, betValue: number) : Observable<any>{

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
+import { ProxyService } from 'src/app/services/proxy.service';
 
 @Component({
   selector: 'app-edit-category',
@@ -12,15 +13,16 @@ import { CategoryService } from 'src/app/services/category.service';
 export class CategoryEditComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   
-  file: File | null | undefined = null;
-  lotCategory : Category;
+  file: File | null | undefined | string = null;
+  category : Category;
 
   constructor(
     private lotCategoryService: CategoryService, 
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private proxyService: ProxyService,
     ) { 
-      this.lotCategory = new Category(0,'','');
+      this.category = new Category(0,'','');
      }
     
   ngOnDestroy(): void {
@@ -31,7 +33,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
     this.file = (event.target as HTMLInputElement).files?.item(0);
     let reader = new FileReader();
     reader.onload = (event: any) => {
-      this.lotCategory = new Category(this.lotCategory.id, this.lotCategory.name, event.target.result);
+      this.category = new Category(this.category.id, this.category.name, event.target.result);
     }
     reader.readAsDataURL(this.file as Blob);
   }
@@ -39,18 +41,31 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {  
     const id = this.activeRoute.snapshot.paramMap.get('id'); 
     if (id != null){  
-      this.subscription.add(this.lotCategoryService.getLotCategoryById(id).subscribe(categ => this.lotCategory = categ));
+      this.subscription.add(this.lotCategoryService.getLotCategoryById(id).subscribe(categ => {
+        this.category = categ
+        this.file = this.getImgNameByUrl(categ.urlIcon);
+      }));
     }
+  }
+
+  private getImgNameByUrl(url: string){
+    if (url){
+      const arr = url.split('/');
+      const name = arr[arr.length-1];
+      return name;
+    }
+    else 
+      return null;
   }
   
   save(){
-    this.lotCategoryService
-      .editLotCategory(this.lotCategory, [this.file as File])
-      .pipe(tap(x => {
-        this.ngOnDestroy();
+    this.subscription.add(this.lotCategoryService
+      .editLotCategory(this.category, this.file as File)
+      .subscribe(() => {
         this.router.navigate(['/home']);
-      }))
-      .subscribe();
+        this.proxyService.setCategory(this.category);
+      })
+    );
   }
 
 }

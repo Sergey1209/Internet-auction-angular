@@ -78,12 +78,12 @@
   color: red;
 }
 
-.margin-no{
-  margin: 0;
-}
-
 .regText:hover{
   cursor: pointer;
+}
+
+.margin-no{
+  margin: 0;
 }
 
 h2{

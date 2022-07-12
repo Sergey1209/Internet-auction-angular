@@ -1,4 +1,4 @@
-export class Auction { 
+export class auction { 
   lotId: number;
   ownerId: number;
   customerNickname:string;

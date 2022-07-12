@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators,  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, tap, catchError, throwError } from 'rxjs';
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnDestroy {
   private subscription = new Subscription();
   loginVisible = true;
   regVisible = false;
@@ -28,8 +28,8 @@ export class AuthComponent implements OnInit {
       'pass' : new FormControl('1', [Validators.required, Validators.minLength(1)])
     });
   }
-
-  ngOnInit(): void {  
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   login(){
@@ -63,8 +63,7 @@ export class AuthComponent implements OnInit {
 
   toHome(){  
     if (this.isLogin){
-      this.subscription.unsubscribe();
-      this.router.navigate(['']);
+      this.router.navigate(['/home']);
     }
   }
 
@@ -77,8 +76,11 @@ export class AuthComponent implements OnInit {
     this.authService.logout();
   }
 
-  public get isLogin(): boolean {
+  get isLogin(): boolean {
     return this.userToken.isAuthenticated;
   }
 
+  home(){
+    this.router.navigate(['/home']);
+  }
 }

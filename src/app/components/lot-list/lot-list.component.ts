@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Category } from 'src/app/models/category';
 import { Lot } from 'src/app/models/lot';
 import { UserToken } from 'src/app/models/user-token';
@@ -15,13 +16,16 @@ enum TypeLots{
   templateUrl: './lot-list.component.html',
   styleUrls: ['./lot-list.component.css']
 })
-export class LotsListComponent {
+export class LotsListComponent implements OnDestroy{
   currentCategory: Category | null = null;
   lots: Lot[] | null = null;
   searchString: string = '';
   oldSearchString: string = '';
   typeLots : TypeLots | null = null;
-  searchCategory: Category;
+  searchCategory: Category = new Category(-1,'Search','');
+  subscription: Subscription = new Subscription();
+  lot: Lot | undefined;
+
 
   @Input()
   set setSearch(val: string){
@@ -37,9 +41,14 @@ export class LotsListComponent {
     public userToken: UserToken,
     private router: Router,
     private lotService: LotService,
-    public proxyService: ProxyService) { 
-      this.proxyService.onSelectCategory.subscribe(x => this.setCategory = x);
-      this.searchCategory = new Category(-1,'Search','');
+    public proxyService: ProxyService
+    ) { 
+      this.subscription.add(this.proxyService.onSelectCategory.subscribe(
+        x => this.setCategory = x));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   unselectCurrentCategory(){
@@ -61,13 +70,11 @@ export class LotsListComponent {
 
   loadLotsBySelectedCategory(activeCategory: Category | null){
     if (this.currentCategory === activeCategory){
-      this.unselectCurrentCategory();
+      this.currentCategory?.togleSelect();
       return;
     }
-    else{
-      this.unselectCurrentCategory();
-    }
 
+    this.unselectCurrentCategory();
     this.typeLots = TypeLots.byCategory;
     this.setCurrentCategory(activeCategory);
 
@@ -107,6 +114,12 @@ export class LotsListComponent {
     }  
   }
 
+  private getMinId(){
+    const arr = this.lots?.filter(x => x !== undefined).map(x => x.id);
+    const minId = arr?.length! > 0 ? Math.min(...arr!) : 0;
+    return minId;
+  }
+
   private getFuncLotsByCategory(){
     const minId = this.getMinId();
     return this.currentCategory ? this.lotService.getlotsByCategory(this.currentCategory.id, minId) : null;
@@ -115,12 +128,6 @@ export class LotsListComponent {
   private getFuncLotsBySearch(){
     const minId = this.getMinId();
     return this.currentCategory ? this.lotService.getlotsBySearch(this.searchString, minId) : null;
-  }
-
-  private getMinId(){
-    const arr = this.lots?.map(x => x.id);
-    const minId = arr?.length! > 0 ? Math.min(...arr!) : 0;
-    return minId;
   }
 
   private getCurrentFuncLots() : any{
@@ -140,7 +147,7 @@ export class LotsListComponent {
     if (func){
       func.subscribe((data: Lot[] | null) => {
         if (data){
-          if (this.currentCategory?.lots?.find(x => x.id < this.getMinId())){
+          if (this.currentCategory?.lots?.filter(x => x !== undefined).find(x => x.id < this.getMinId())){
             return;
           }
 

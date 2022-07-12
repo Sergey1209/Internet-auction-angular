@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AUCTION_API_URL } from '../app.injection-tokens';
-import { serviceNames } from '../Functions/backend';
+import { serviceNames } from '../functions/backend';
 import { Lot } from '../models/lot';
 
 @Injectable({

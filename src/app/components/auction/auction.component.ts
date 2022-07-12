@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Auction } from 'src/app/models/auction';
+import { auction } from 'src/app/models/auction';
 import { UserToken } from 'src/app/models/user-token';
 import { AuctionService } from 'src/app/services/auction.service';
 
@@ -11,8 +11,8 @@ import { AuctionService } from 'src/app/services/auction.service';
   templateUrl: './auction.component.html',
   styleUrls: ['./auction.component.css']
 })
-export class AuctionComponent implements OnInit {
-  auction: Auction = new Auction(0, 0, '', 0, new Date(Date.now()), '', '',[]);
+export class AuctionComponent implements OnInit, OnDestroy {
+  auction = new auction(0, 0, '', 0, new Date(Date.now()), '', '',[]);
   subscription = new Subscription();
   isOwner:  boolean = false;
   isAdmin:  boolean = false;
@@ -50,6 +50,9 @@ export class AuctionComponent implements OnInit {
       this.router.navigate(['/home']);
       return;
     }     
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   ngOnInit(): void {

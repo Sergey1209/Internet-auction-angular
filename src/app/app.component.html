@@ -1,7 +1,7 @@
 ﻿<body>
   <div class="container">
     <div class="top-nav">
-      <a [routerLink]="['/home']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a (click)="home()">Home</a>
     </div>
     <app-top-line></app-top-line>
     <router-outlet></router-outlet>

@@ -43,4 +43,11 @@
 a{
   margin: 0px;
   margin-right: 10px;
+  cursor: pointer;
+  margin:0px;
+  margin-right:10px;
+  text-decoration: underline;
+  color: green;
+  font-size: 14px;
+
 }

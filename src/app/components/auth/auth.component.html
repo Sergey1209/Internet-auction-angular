@@ -22,13 +22,13 @@
         <p class="margin-no">
           <a *ngIf="!loginVisible" class="regText" (click)="toggleButton()">Login</a>
           <a *ngIf="!regVisible" class="regText" (click)="toggleButton()">Registration</a>
-          <a href="/home">Home</a>
+          <a class="regText" (click)="home()">Home</a>
         </p>
         <input *ngIf="regVisible" class="submit" type="submit" value="Registration" (click)="registration()">
         <input *ngIf="loginVisible" class="submit" type="submit" value="Login" (click)="login()">
       </div>
       <div *ngIf="isLogin" class="block">
-        <a href="/home">Home</a>
+        <a class="regText" (click)="home()">Home</a>
         <input class="submit" type="submit" value="Logout" (click)="logout()">
       </div>
     </div>    

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AUCTION_API_URL } from '../app.injection-tokens';
-import { serviceNames } from '../Functions/backend';
+import { serviceNames } from '../functions/backend';
 import { Category } from '../models/category';
 
 @Injectable({
@@ -26,14 +26,18 @@ export class CategoryService {
     return this.httpClient.get<Category>(url);
   }
 
-  editLotCategory(lotCategory: Category, files: File[]) : Observable<any>{
+  editLotCategory(lotCategory: Category, file: File) : Observable<any>{
     const url = `${this.baseApiUrl}/${serviceNames.lotCategory}`;
     const formData: FormData = new FormData();
 
     formData.append('name', lotCategory?.name );
     formData.append('id', lotCategory?.id.toString());
-    formData.append('file', files[0] );
-    
+
+    if (file){
+      const key = typeof file === 'string' ? 'notChangedfile' : 'file';
+      formData.append(key, file);
+    }
+
     if (lotCategory.id > 0 ){
       return this.httpClient.put<any>(url, formData)
     }

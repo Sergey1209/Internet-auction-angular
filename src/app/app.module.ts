@@ -73,13 +73,12 @@ export function tokenGetter(){
   providers: [{
     provide: AUCTION_API_URL,
     useValue: environment.auctionApi,
-    
     },
     {
     provide: AUTH_API_URL,
     useValue: environment.authApi
     },
-    ProxyService
+    ProxyService,
   ],
   bootstrap: [AppComponent]
 })

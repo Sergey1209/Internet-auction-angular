@@ -8,10 +8,9 @@ import { Router } from '@angular/router';
 })
 export class TopLineComponent  {
 
-  
-  constructor(private route: Router) { }
+  constructor(private router: Router) { }
 
   onClickLogin(){
-    this.route.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 }

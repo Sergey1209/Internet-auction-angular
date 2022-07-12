@@ -1,30 +1,36 @@
 // taken from https://medium.com/@coolsharang/angular-combo-box-840c893a253c
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { Category } from 'src/app/models/category';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-combo-box',
   templateUrl: './combo-box.component.html',
   styleUrls: ['./combo-box.component.css']
 })
-export class ComboBoxComponent implements OnInit {
+export class ComboBoxComponent implements OnInit, OnDestroy {
   list: Category[] = [];
   filteredList: Category[] = [];
   inputItem: string = '';
   listHidden = true;
   selectedIndex = -1;
+  subscription = new Subscription();
 
   constructor(private categoryService: CategoryService) { }
+  
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit() {
-    this.categoryService.getCategories().subscribe(listCateg => {
+    this.subscription.add(this.categoryService.getCategories().subscribe(listCateg => {
       this.list = listCateg;
       this.filteredList = this.list;
       const index =  this.filteredList.findIndex(x => x.id === this.categoryId);
       this.selectItem(index);
-    });
+    }));
   }
 
   @Input()
@@ -85,7 +91,6 @@ export class ComboBoxComponent implements OnInit {
   toggleListDisplay(sender: number) {
     if (sender === 1) {
       this.listHidden = false;
-      // this.getFilteredList();
     } else {
       setTimeout(() => {
           this.selectItem(this.selectedIndex);
